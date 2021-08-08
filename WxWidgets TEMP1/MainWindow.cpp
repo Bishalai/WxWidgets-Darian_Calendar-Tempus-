@@ -104,6 +104,8 @@ MainWindow:: MainWindow(wxWindow* parent,
     
     //darian tool
     toolBar->AddTool(DarianItem->GetId(), _("Darian Calendar"), DarianItem->GetBitmap(), _("Switch to Darian Calendar"));
+
+    toolBar->AddSeparator();
     
     //month view tool
     toolBar->AddTool(switchToMonth->GetId(), _("Months View"), switchToMonth->GetBitmap(), _("Switch to Months view"));
@@ -111,14 +113,21 @@ MainWindow:: MainWindow(wxWindow* parent,
     //year view tool
     toolBar->AddTool(switchToYear->GetId(), _("Year view"), switchToYear->GetBitmap(), _("Switch to Year View"));
     
+    toolBar->AddSeparator();
+
     //date set date tool
     toolBar->AddTool(setDate->GetId(), _("setDate"), setDate->GetBitmap(), _("Set the date"));
     
     //time set time tool
     toolBar->AddTool(setTime->GetId(), _("setTime"), setTime->GetBitmap(), _("Set the time"));
 
+    toolBar->AddSeparator();
+
     //quit tool
     toolBar->AddTool(wxID_EXIT, _("QUIT"), wxArtProvider::GetBitmap("wxART_QUIT"),_("Quit"));
+
+    toolBar->AddSeparator();
+    toolBar->AddStretchableSpace();
 
     //help tool
     toolBar->AddTool(helpItem->GetId(), _("Help"), helpItem->GetBitmap() , _("Help"));

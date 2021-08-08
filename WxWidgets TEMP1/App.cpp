@@ -12,6 +12,7 @@ App::App()
 
 bool App::OnInit()
 {
+	
 	if (!wxApp::OnInit())
 		return false;
 

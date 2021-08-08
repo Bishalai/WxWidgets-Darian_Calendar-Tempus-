@@ -24,6 +24,10 @@ public:
         void onDarian(wxCommandEvent& event);
         void onQuit(wxCommandEvent& event);
         void onHelp(wxCommandEvent& event);
+        void onsetDate(wxCommandEvent& event);
+        void onsetTime(wxCommandEvent& event);
+        void onswitchYear(wxCommandEvent& event);
+        void onswitchMonth(wxCommandEvent& event);
         
         void onClose(wxCloseEvent& event);
 

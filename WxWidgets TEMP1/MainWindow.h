@@ -2,6 +2,15 @@
 
 #include<wx/wxprec.h>
 #include"datetime.h"
+#include <wx/artprov.h>
+#include "datetime.h"
+#include "Georgian.xpm"
+#include "Darian.xpm"
+#include "Month.xpm"
+#include "Year.xpm"
+#include "Icon.xpm"
+#include "Date.xpm"
+#include "Time.xpm"
 
 #ifndef WX_PRECOMP
 #include <wx/wx.h>

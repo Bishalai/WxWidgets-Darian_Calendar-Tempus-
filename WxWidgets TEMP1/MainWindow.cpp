@@ -1,12 +1,6 @@
 // main window od the app
 #include "MainWindow.h"
-#include <wx/artprov.h>
-#include "datetime.h"
-#include "Georgian.xpm"
-#include "Darian.xpm"
-#include "Month.xpm"
-#include "Year.xpm"
-#include "Icon.xpm"
+
 
 BEGIN_EVENT_TABLE(MainWindow, wxFrame)
     EVT_MENU(wxID_EXIT , MainWindow::onQuit)
@@ -33,14 +27,22 @@ MainWindow:: MainWindow(wxWindow* parent,
     //wxmenu item
     
     //home menu items
+
+    //georgian menu item
+    wxBitmap GeorgianBmp(Georgian_xpm);
     wxMenuItem* GeorgianItem =  HomeMenu->Append(wxID_ANY, _("&Georgian\tCtrl+X"));
+    GeorgianItem->SetBitmap(GeorgianBmp);
     Bind(wxEVT_MENU, &MainWindow::onGeorgian, this, GeorgianItem->GetId());
 
+    //darian menu item
+    wxBitmap DarianBmp(Darian_xpm);
     wxMenuItem* DarianItem = HomeMenu->Append(wxID_ANY, _("&Darian\tCtrl+C"));
+    DarianItem->SetBitmap(DarianBmp);
     Bind(wxEVT_MENU, &MainWindow::onDarian, this, DarianItem->GetId());
 
     HomeMenu->AppendSeparator();
 
+    //quititem
     wxMenuItem* quitItem = new wxMenuItem(HomeMenu, wxID_EXIT);
     quitItem->SetBitmap(wxArtProvider::GetBitmap("wxART_QUIT"));
     HomeMenu->Append(quitItem);
@@ -51,23 +53,33 @@ MainWindow:: MainWindow(wxWindow* parent,
     menuBar->Append(optionsMenu, _("&Options"));
 
     //setdate
+    wxBitmap DateBmp(Date_xpm);
     wxMenuItem* setDate = optionsMenu->Append(wxID_ANY, _("&Set Date\tCtrl+D"));
+    setDate->SetBitmap(DateBmp);
     Bind(wxEVT_MENU, &MainWindow::onsetDate, this, setDate->GetId());
 
     //set time
+    wxBitmap TimeBmp(Time_xpm);
     wxMenuItem* setTime= optionsMenu->Append(wxID_ANY, _("&Set Time\tCtrl+T"));
+    setTime->SetBitmap(TimeBmp);
     Bind(wxEVT_MENU, &MainWindow::onsetTime, this, setTime->GetId());
 
     optionsMenu->AppendSeparator();
     
     //view submenu in options
     wxMenu* viewsubMenu = new wxMenu();
-    //wxMenuItem* switchToCentury = viewsubMenu->Append(wxID_ANY, _("&To Century"));
+    
+    
     //for year view
+    wxBitmap YearBmp(Year_xpm);
     wxMenuItem* switchToYear = viewsubMenu->Append(wxID_ANY, _("&To Year"));
+    switchToYear->SetBitmap(YearBmp);
     Bind(wxEVT_MENU, &MainWindow::onswitchYear, this, switchToYear->GetId());
 
+    //month view
+    wxBitmap MonthBmp(Month_xpm);
     wxMenuItem* switchToMonth = viewsubMenu->Append(wxID_ANY, _("&To Months"));
+    switchToMonth->SetBitmap(MonthBmp);
     Bind(wxEVT_MENU, &MainWindow::onswitchMonth, this, switchToMonth->GetId());
 
     optionsMenu->AppendSubMenu(viewsubMenu, _("Switch Views\tCtrl+S"));
@@ -75,7 +87,10 @@ MainWindow:: MainWindow(wxWindow* parent,
     //help menu in menubar
     wxMenu* helpMenu = new wxMenu();
     menuBar->Append(helpMenu, _("&Help"));
-    wxMenuItem* helpItem = helpMenu->Append(wxID_ANY, _("&Help\tCtrl+H"));
+    
+    //help item
+    wxMenuItem* helpItem = helpMenu->Append(wxID_HELP);
+    helpItem->SetBitmap(wxArtProvider::GetBitmap("wxART_HELP", wxART_OTHER, wxSize(16,16)));
     Bind(wxEVT_MENU, &MainWindow::onHelp, this, helpItem->GetId());
 
     //set the Menu
@@ -83,18 +98,31 @@ MainWindow:: MainWindow(wxWindow* parent,
 
     //toolbar setup
     wxToolBar* toolBar = CreateToolBar();
-    wxBitmap GeorgianBmp(Georgian_xpm);
-    toolBar->AddTool(GeorgianItem->GetId(), _("Georgian Calendar"),GeorgianBmp ,_("Switch to Georgian Calendar"));
-    wxBitmap DarianBmp(Darian_xpm);
-    toolBar->AddTool(DarianItem->GetId(), _("Georgian Calendar"), DarianBmp, _("Switch to Darian Calendar"));
-    wxBitmap MonthBmp(Month_xpm);
-    toolBar->AddTool(switchToMonth->GetId(), _("Months View"), MonthBmp, _("Switch to Months view"));
-    wxBitmap YearBmp(Year_xpm);
-    toolBar->AddTool(switchToYear->GetId(), _("Year view"), YearBmp, _("Switch to Year View"));
-
-
     
+    //georgian tool
+    toolBar->AddTool(GeorgianItem->GetId(), _("Georgian Calendar"),GeorgianItem->GetBitmap() ,_("Switch to Georgian Calendar"));
+    
+    //darian tool
+    toolBar->AddTool(DarianItem->GetId(), _("Darian Calendar"), DarianItem->GetBitmap(), _("Switch to Darian Calendar"));
+    
+    //month view tool
+    toolBar->AddTool(switchToMonth->GetId(), _("Months View"), switchToMonth->GetBitmap(), _("Switch to Months view"));
+    
+    //year view tool
+    toolBar->AddTool(switchToYear->GetId(), _("Year view"), switchToYear->GetBitmap(), _("Switch to Year View"));
+    
+    //date set date tool
+    toolBar->AddTool(setDate->GetId(), _("setDate"), setDate->GetBitmap(), _("Set the date"));
+    
+    //time set time tool
+    toolBar->AddTool(setTime->GetId(), _("setTime"), setTime->GetBitmap(), _("Set the time"));
+
+    //quit tool
     toolBar->AddTool(wxID_EXIT, _("QUIT"), wxArtProvider::GetBitmap("wxART_QUIT"),_("Quit"));
+
+    //help tool
+    toolBar->AddTool(helpItem->GetId(), _("Help"), helpItem->GetBitmap() , _("Help"));
+
     toolBar->Realize();
 
     //statusbar
@@ -114,9 +142,7 @@ void MainWindow::onGeorgian(wxCommandEvent& event)
 {
     wxMessageBox("set to Georgian Calendar");
     PushStatusText(_("Set to Gregorian Calendar"));
-
-    wxSleep(5);
-
+    wxSleep(1);
     PopStatusText();
 };
 
@@ -130,9 +156,7 @@ void MainWindow::onDarian(wxCommandEvent& event)
 {
     wxMessageBox("set to Darian Calendar");
     PushStatusText(_("Set to Darian Calendar"));
-
-    wxSleep(5);
-
+    wxSleep(1);
     PopStatusText();
 };
 
@@ -140,9 +164,7 @@ void MainWindow::onsetDate(wxCommandEvent& event)
 {
     wxMessageBox("set date");
     PushStatusText(_("date set"));
-
-    wxSleep(5);
-
+    wxSleep(1);
     PopStatusText();
 };
 
@@ -150,9 +172,7 @@ void MainWindow::onsetTime(wxCommandEvent& event)
 {
     wxMessageBox("set time");
     PushStatusText(_("time set"));
-
-    wxSleep(5);
-
+    wxSleep(1);
     PopStatusText();
 };
 
@@ -160,9 +180,7 @@ void MainWindow::onswitchYear (wxCommandEvent& event)
 {
     wxMessageBox("Year View");
     PushStatusText(_("Year View Set"));
-
-    wxSleep(5);
-
+    wxSleep(1);
     PopStatusText();
 };
 
@@ -170,8 +188,7 @@ void MainWindow::onswitchMonth(wxCommandEvent& event)
 {
     wxMessageBox("Month View");
     PushStatusText(_("Month View Set"));
-
-    wxSleep(5);
+    wxSleep(1);
 
     PopStatusText();
 };

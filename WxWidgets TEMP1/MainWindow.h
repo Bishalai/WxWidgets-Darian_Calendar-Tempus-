@@ -1,6 +1,7 @@
 #pragma once
 
 #include<wx/wxprec.h>
+#include<string>
 #include"datetime.h"
 #include <wx/artprov.h>
 #include "datetime.h"
@@ -11,6 +12,7 @@
 #include "Icon.xpm"
 #include "Date.xpm"
 #include "Time.xpm"
+#include<wx/display.h>
 
 #ifndef WX_PRECOMP
 #include <wx/wx.h>

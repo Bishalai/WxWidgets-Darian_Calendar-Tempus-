@@ -1,9 +1,12 @@
 #pragma once
+
 #include<wx/datetime.h>
 #include<wx/timer.h>
+#include"MainWindow.h"
 
-class datetime : public wxDateTime
+using namespace std;
+
+class GDate
 {
 
 };
-

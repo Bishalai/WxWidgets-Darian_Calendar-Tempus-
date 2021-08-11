@@ -1,3 +1,4 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
 // main window od the app
 #include "MainWindow.h"
 
@@ -136,7 +137,7 @@ MainWindow:: MainWindow(wxWindow* parent,
 
     toolBar->Realize();
 
-
+    
     //Sizers
     wxBoxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -199,10 +200,115 @@ MainWindow:: MainWindow(wxWindow* parent,
     //calling em sizers
     panel_cal->SetSizerAndFit(gs);
     panel_top->SetSizer(cal_sizer);
+    
+    /*
+    //Sizers
+    wxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer* sizer_top = new wxBoxSizer(wxVERTICAL);
+    //wxSizer* cal_sizer = new wxBoxSizer(wxHORIZONTAL);
 
+    //panel
+    wxDisplay win_display;
+    wxRect win_screen = win_display.GetClientArea();
+    wxSize appwinsize = wxSize(win_screen.GetWidth() / 8, win_screen.GetHeight() / 8);
+    wxSize appwinsizebot = wxSize(appwinsize.GetWidth(), appwinsize.GetHeight() / 3);
+
+    //below are the height and width modifiers
+    //int winsizeHeightInc = win_screen.GetHeight() / 3;
+    //int winsizeWidthInc = win_screen.GetWidth() / 1.5;
+    //winsize.IncBy(winsizeWidthInc, winsizeHeightInc);
+
+    wxPanel* panel_left = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+    panel_left->SetBackgroundColour(wxColor(100, 150, 200));
+
+    wxPanel* panel_lefttop = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+    panel_lefttop->SetBackgroundColour(wxColor(0, 0, 0));
+
+    wxButton* prevbutton = new wxButton(panel_left, wxID_ANY, "prev", wxPoint(120, 0), wxDefaultSize);
+
+    //wxBitmap bitmap;
+    //bitmap.LoadFile("‪D:\Photos\Messenger\123.jpeg", wxBITMAP_TYPE_JPEG);                                        //  //bitmapbutton didnt load :/
+    //wxBitmapButton* button12 = new wxBitmapButton(panel_left, -1, bitmap, wxPoint(0, 0), wxSize(50, 50), 0);
+
+
+    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "DATE :", wxPoint(20, 80));
+    wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "TIME :", wxPoint(20, 120));
+    wxStaticText* text_ofseason = new wxStaticText(panel_left, wxID_ANY, "Season :", wxPoint(20, 160));
+
+    wxPanel* panel_rightbottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+    panel_rightbottom->SetBackgroundColour(wxColor(0, 0, 0));
+    wxButton* bottonarightbottom = new wxButton(panel_rightbottom, wxID_ANY, "to do list (opt)", wxPoint(40, 0), wxDefaultSize);
+
+    wxPanel* panel_topright = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+    panel_topright->SetBackgroundColour(wxColor(100, 100, 110));
+    wxButton* toprightbottom1 = new wxButton(panel_topright, wxID_ANY, " Next ", wxPoint(0, 0), wxDefaultSize);
+
+    //bitmapbutton didnt load :/
+
+    wxStaticText* calander_checkbox = new wxStaticText(panel_topright, wxID_ANY, "calander", wxPoint(20, 60));
+    wxCheckBox* checkbox1 = new wxCheckBox(panel_topright, wxID_ANY, wxT("Georgian"), wxPoint(20, 80), wxDefaultSize);
+    checkbox1->SetValue(true);
+    wxCheckBox* checkbox2 = new wxCheckBox(panel_topright, wxID_ANY, wxT("Darian"), wxPoint(20, 100), wxDefaultSize);
+    checkbox2->SetValue(true);
+
+    wxStaticText* view_checkbox = new wxStaticText(panel_topright, wxID_ANY, "view", wxPoint(20, 140));
+    wxCheckBox* checkbox3 = new wxCheckBox(panel_topright, wxID_ANY, wxT("month"), wxPoint(20, 160), wxDefaultSize);
+    checkbox3->SetValue(true);
+    wxCheckBox* checkbox4 = new wxCheckBox(panel_topright, wxID_ANY, wxT("year"), wxPoint(20, 180), wxDefaultSize);
+    checkbox4->SetValue(true);
+
+    Sizer->Add(panel_left, 1, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, 5);
+    Sizer->Add(panel_lefttop, 3, wxEXPAND | wxTOP, 5);
+    sizer_top->Add(panel_topright, 4, wxEXPAND | wxRIGHT, 5);
+
+    sizer_top->Add(panel_rightbottom, 2, wxEXPAND | wxTOP | wxRIGHT, 5);
+    Sizer->Add(sizer_top, 1, wxEXPAND | wxLEFT, 5);
+
+
+
+    wxSize calsize = wxSize(appwinsize.GetWidth() / 2, appwinsize.GetHeight() / 2);
+    wxSize cellsize = wxSize(calsize.GetWidth() / 20, calsize.GetHeight() / 7);
+
+    wxMessageDialog* dial = new wxMessageDialog(NULL, wxT("you are totally fucked mf!!"), wxT("hahahahahahahahahah"), wxOK | wxICON_ERROR);
+
+    dial->ShowModal();
+
+    // month  view 
+
+    wxGridSizer* gs = new wxGridSizer(6, 7, cellsize);
+
+
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+    gs->Add(new wxButton(panel_lefttop, -1, _("month,year ")), 1, wxEXPAND);
+
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+    gs->Add(new wxButton(panel_lefttop, -1, _("Sun")), 1, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Mon")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Tue")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Wed")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Thu")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Fri")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _("Sat")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+    for (int i = 1; i < 30; i++)
+    {
+        wxString day_count = wxString::Format(wxT("%i"), i);
+        gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+    }
+    //buttons:
+    panel_lefttop->SetSizerAndFit(gs);*/
 
     //setting sizer
     SetSizerAndFit(Sizer);
+    
 
     //statusbar
     wxDateTime dt = wxDateTime::Now();

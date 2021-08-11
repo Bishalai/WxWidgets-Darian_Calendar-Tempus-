@@ -7,11 +7,11 @@ class Gregorian_DateTime : public CalDateTime
 protected:
 	// reqired constants
 
-	const float d_sol_year_ratio = 24.68979; //24 hours to 24 hours 39 minutes 35.244 seconds
+	const float g_sol_day_ratio = 24.65979; //24 hours to 24 hours 39 minutes 35.244 seconds
 
-	const float d_sols_per_year = 668.6; //sols in a year, taking  the 10 years has 6686 sols method
+	const float g_sols_per_year = 668.6; //sols in a year, taking  the 10 years has 6686 sols method
 
-	const float d_sols_from_start = 138920.13356; //sols passed from 1609, start of darian calendar to 2000,1,1
+	const float g_sols_from_start = 138920.13356; //sols passed from 1609, start of darian calendar to 2000,1,1
 
 	// the basic datetime members
 	int g_year;
@@ -61,6 +61,14 @@ protected:
 		"Spring",
 		"Summer",
 		"Autumn"
+	};
+
+	// required array for darian conversion
+	const int d_months_size[25] = { 0,
+		28, 28, 28, 28, 28, 27,
+		28, 28, 28, 28, 28, 27,
+		28, 28, 28, 28, 28, 27,
+		28, 28, 28, 28, 28, 27,
 	};
 
 public:
@@ -138,7 +146,7 @@ public:
 
 	// conversion functions;
 
-
+	Darian_Date_Time convert_to_darian();
 
 
 
@@ -298,6 +306,38 @@ void Gregorian_DateTime::set_seconds(int s)
 	}
 };
 
+
+//set date time to current date and time taken from the gregorian one and then converted
+void Gregorian_DateTime::set_now()
+{
+	wxDateTime dt_now = wxDateTime::Now();
+	int   hour = static_cast<int>(dt_now.GetHour());
+	int   minute = static_cast<int>(dt_now.GetMinute());
+	int   seconds = static_cast<int>(dt_now.GetSecond());
+
+	int year = static_cast<int>(dt_now.GetYear());
+	int day = static_cast<int>(dt_now.GetDay());
+
+	int daysofyear = static_cast<int>(dt_now.GetDayOfYear());// 1-366
+
+	//since wxdatetime dont give month num, we find it out using days of year
+	int i = 1;
+	if (dt_now.IsLeapYear && daysofyear > 60)
+	{
+		daysofyear -= 1;
+	}
+
+	do
+	{
+		daysofyear -= g_months_size[i];
+		i++;
+	} while (daysofyear >= g_months_size[i]);
+
+	int month = i;
+	set_date(year, month, day);
+	set_time(hour, minute, seconds);
+};
+
 /// get functions
 // return hour
 int Gregorian_DateTime::get_hour()
@@ -450,6 +490,88 @@ void Gregorian_DateTime::previous_month()
 		set_day(g_day);
 	}
 };
+
+
+
+// conversion functions
+
+Darian_Date_Time Gregorian_DateTime::convert_to_darian()
+{
+	Darian_Date_Time dt_temp;
+
+	// convertinf them to hours span from 2000/1/1 0:00:01
+
+	float totaldayshours;
+
+	totaldayshours = ((g_year - 2000) * 365 + (g_year - 2000) / 4 + g_day -1 ) * 24; 
+	// heere, accounting for years , leap years, day of the month
+
+	for (int i = 1; i < g_month; i++) // for adding months passed
+	{
+		totaldayshours += (g_months_size[g_month])*24;
+	}
+	// for small time in a day
+	totaldayshours += g_hour + (g_minute / 60) + (g_seconds / 360);
+
+	// converting to sols days
+	float totalsoldays = (totaldayshours / g_sol_day_ratio) + g_sols_from_start;
+
+	// converting it into sol year
+	float totalsolyear = totalsoldays / g_sols_per_year;
+
+	//converting sol year to int
+	int solyear = static_cast<int>(totalsolyear);
+
+	// converting it into sols
+	float totalsoldays = (totalsolyear - solyear) * 668.6;
+
+	// converting to int
+	int soldays = static_cast<int>(totalsoldays);
+
+	// converting to hours of a sol
+	float totalsolhour = (totalsoldays - soldays) * g_sol_day_ratio;
+
+	int solhour = static_cast<int>(totalsolhour);
+
+	float totalsolmin = (totalsolhour - solhour) * 60;
+
+	int solmin = static_cast<int>(totalsolmin);
+
+	float totalsolsec = (totalsolmin - solmin) * 60;
+
+	int solsec = static_cast<int>(totalsolsec);
+	
+	
+	int d_hour = solhour;// d_ to signify our d_value or final value
+	
+	int d_min = solmin;
+	int d_sec = solsec;
+
+	dt_temp.set_time(d_hour, d_min, d_sec);
+	
+	int i = 1;	// this to get the months of the darian calendar
+	do
+	{
+		totalsoldays -= d_months_size[i];
+		i++;
+	} while (totalsoldays > d_months_size[i] );
+
+	int d_month = i;
+	int d_year = solyear;
+
+	// to convert the daysofyear to day
+	for (int j = 1; j < d_month; j++)
+	{
+		soldays -= d_months_size[j];
+	}
+	int d_day = soldays;
+
+	dt_temp.set_date(d_year, d_month, d_day);
+
+	return dt_temp;
+
+};
+
 
 
 Gregorian_DateTime::~Gregorian_DateTime()

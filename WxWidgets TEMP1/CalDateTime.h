@@ -353,6 +353,19 @@ void Darian_Date_Time::set_time(int hr, int min, int sec)
 };
 
 
+// set date time to current date and time taken from the gregorian one and then converted
+void Darian_Date_Time::set_now()
+{
+	Gregorian_DateTime dt_now;
+	dt_now.set_now();
+
+	Darian_Date_Time dt_temp = dt_now.convert_to_darian();
+
+	set_time(dt_temp.get_hour(), dt_temp.get_minute(), dt_temp.get_seconds());
+	set_date(dt_temp.get_year(), dt_temp.get_month(), dt_temp.get_sol());
+
+};
+
 
 //get functions now defined
 int Darian_Date_Time::get_hour()

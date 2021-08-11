@@ -266,6 +266,13 @@ int Gregorian_DateTime::get_no_of_days_in_month()
 };
 
 
+//get corresponding input month name
+string Gregorian_DateTime::get_input_month_name(int n)
+{
+	return g_months_name[n];
+};
+
+
 // return first day of the month's weekday value; sunday, mondayand so on. till 7
 int Gregorian_DateTime::get_firstday_month()
 {

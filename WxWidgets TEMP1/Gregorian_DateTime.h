@@ -131,6 +131,10 @@ public:
 	//weekday name like sunday, monday, etc
 	string get_weekday_name();
 
+	//get corresponding input month name
+	string get_input_month_name(int n);
+	
+
 	//returns no of days in month
 	int get_no_of_days_in_month();
 

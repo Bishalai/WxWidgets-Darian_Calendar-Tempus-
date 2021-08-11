@@ -130,6 +130,9 @@ public:
 	//returns no of days in month
 	int get_no_of_days_in_month();
 
+	//no of months
+	int get_no_of_months();
+
 
 	// return first day of the month's weekday value; sunday, mondayand so on. till 7
 	string get_firstday_month();
@@ -572,6 +575,11 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 
 };
 
+//no of months
+int Gregorian_DateTime::get_no_of_months()
+{
+	return 12;
+};
 
 
 Gregorian_DateTime::~Gregorian_DateTime()

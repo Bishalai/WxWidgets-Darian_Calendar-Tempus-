@@ -1,7 +1,7 @@
 #pragma once
 
 #include<string>
-#include "MainWindow.h"
+#include "datetime.h"
 #include "Gregorian_DateTime.h"
 
 
@@ -15,6 +15,8 @@ public:
 	// abstract class for datetime
 };
 
+class Gregorian_DateTime;
+
 
 // class dor darian calendar
 class Darian_Date_Time : public CalDateTime
@@ -22,7 +24,7 @@ class Darian_Date_Time : public CalDateTime
 protected:
 	// reqired constants
 
-	const float d_sol_year_ratio = 24.68979; //24 hours to 24 hours 39 minutes 35.244 seconds
+	const float d_sol_day_ratio = 24.65979; //24 hours to 24 hours 39 minutes 35.244 seconds
 
 	const float d_sols_per_year = 668.6; //sols in a year, taking  the 10 years has 6686 sols method
 
@@ -93,7 +95,10 @@ protected:
 		"Summer",
 		"Spring"
 	};
-
+	const int g_months_size[13] =
+	{
+		0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	};
 
 public:
 
@@ -157,8 +162,11 @@ public:
 	void previous_month();
 
 
-	// conversion functions;
+	// get the no of months
+	int get_no_of_months();
 
+	// conversion functions;
+	Gregorian_DateTime convert_to_Gregorian();
 
 
 
@@ -512,6 +520,96 @@ void Darian_Date_Time::previous_month()
 	}
 };
 
+
+
+// conversion function darian to gregorian
+Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
+{
+	Gregorian_DateTime dt_temp;
+	
+	// convert to sols
+
+	float totalsols = (d_sol + (d_year * d_sols_per_year) + (d_hour / 24) + (d_minute / 24 / 60) + (d_seconds / 24 / 60 / 60));
+
+	for (int i = 1; i < d_month; i++)
+	{
+		totalsols += d_months_size[i];
+	}
+
+	totalsols -= d_sols_from_start;// changes the sols from start to 2000
+
+	// sols into hour;
+
+	totalsols = totalsols * d_sol_day_ratio;
+
+	// into days
+	totalsols = totalsols / 24;
+
+	float totaldays = totalsols;
+
+
+	// totaldays into years
+
+	float totalyear = totaldays / 365.25;
+
+	// int year
+	int g_year = static_cast<int>(totalyear);
+
+	// now for months
+	float totaldaysofyear = (totalyear - g_year) * 365;
+
+	//daysof year into month
+
+	int g_month;
+	if (g_year % 4 == 0 && totaldaysofyear > 60)
+	{
+
+		int i =3;
+		do
+		{
+			totaldaysofyear -= g_months_size[i];
+			i++;
+		} while (totaldaysofyear > g_months_size[i]);
+
+		 g_month = i;
+	}
+	else
+	{
+		int i = 1;
+		do
+		{
+			totaldaysofyear -= g_months_size[i];
+			i++;
+		} while (totaldaysofyear > g_months_size[i]);
+
+		 g_month = i;
+	}
+
+	int g_day = static_cast<int>(totaldaysofyear);
+
+	float hour = (totaldaysofyear - g_day)*24;
+
+	int g_hour = static_cast<int>(hour);
+
+	float min = (hour - g_hour) * 60;
+
+	int g_min = static_cast<int>(min);
+
+	float sec = (min - g_min) * 60;
+
+	int g_sec = static_cast<int>(sec);
+
+	dt_temp.set_date(g_year, g_month, g_day);
+	dt_temp.set_time(g_hour, g_min, g_sec);
+
+	return dt_temp;
+};
+
+
+int Darian_Date_Time::get_no_of_months()
+{
+	return 24;
+};
 
 Darian_Date_Time::~Darian_Date_Time()
 {

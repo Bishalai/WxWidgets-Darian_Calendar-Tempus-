@@ -1,5 +1,6 @@
 ﻿#include "darianMain.h"
 
+
 wxBEGIN_EVENT_TABLE(darianMain, wxFrame) // macros to bind the buttons events
 //EVT_BUTTON(10001, OnButtonClicked)
 wxEND_EVENT_TABLE()

@@ -1,6 +1,12 @@
-
 #include "darian.h"
-//#include "wx/setup.h"
+#include "wx/setup.h"
+
+#define _CRT_SECURE_NO_WARNINGS
+//#include "App.h"
+//#include"id.h"
+
+
+
 wxIMPLEMENT_APP(darian);    //program entry
 darian::darian()
 {

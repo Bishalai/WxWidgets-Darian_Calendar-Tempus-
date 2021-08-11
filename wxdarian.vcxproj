@@ -149,8 +149,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CalDateTime.cpp" />
     <ClCompile Include="darian.cpp" />
     <ClCompile Include="darianMain.cpp" />
+    <ClCompile Include="Gregorian_DateTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Darian.xpm" />
@@ -164,6 +166,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\wxCalander\wxCalander\darian.h" />
     <ClInclude Include="..\..\wxCalander\wxCalander\darianMain.h" />
+    <ClInclude Include="CalDateTime.h" />
+    <ClInclude Include="Gregorian_DateTime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

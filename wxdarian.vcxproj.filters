@@ -17,6 +17,12 @@
     <ClCompile Include="darianMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CalDateTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gregorian_DateTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Darian.xpm">
@@ -48,5 +54,7 @@
     <ClInclude Include="..\..\wxCalander\wxCalander\darianMain.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="CalDateTime.h" />
+    <ClInclude Include="Gregorian_DateTime.h" />
   </ItemGroup>
 </Project>

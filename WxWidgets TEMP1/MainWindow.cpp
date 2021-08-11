@@ -137,7 +137,7 @@ MainWindow:: MainWindow(wxWindow* parent,
 
     toolBar->Realize();
 
-    
+    /*
     //Sizers
     wxBoxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -201,7 +201,7 @@ MainWindow:: MainWindow(wxWindow* parent,
     panel_cal->SetSizerAndFit(gs);
     panel_top->SetSizer(cal_sizer);
     
-    /*
+    */
     //Sizers
     wxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
     wxSizer* sizer_top = new wxBoxSizer(wxVERTICAL);
@@ -304,7 +304,7 @@ MainWindow:: MainWindow(wxWindow* parent,
         gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
     }
     //buttons:
-    panel_lefttop->SetSizerAndFit(gs);*/
+    panel_lefttop->SetSizerAndFit(gs);
 
     //setting sizer
     SetSizerAndFit(Sizer);

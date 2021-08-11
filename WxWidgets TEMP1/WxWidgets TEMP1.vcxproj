@@ -146,14 +146,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="CalDateTime.cpp" />
     <ClCompile Include="datetime.cpp" />
     <ClCompile Include="Events.cpp" />
+    <ClCompile Include="G_CalDateTime.cpp" />
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="CalDateTime.h" />
     <ClInclude Include="datetime.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="G_CalDateTime.h" />
     <ClInclude Include="id.h" />
     <ClInclude Include="MainWindow.h" />
   </ItemGroup>

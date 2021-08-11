@@ -138,56 +138,65 @@ MainWindow:: MainWindow(wxWindow* parent,
 
 
     //Sizers
-    wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
 
     //panel
     wxDisplay win_display;
     wxRect win_screen = win_display.GetClientArea();
-    wxSize appwinsize = wxSize (win_screen.GetWidth()/2,win_screen.GetHeight()/4);
-    wxSize appwinsizebot = wxSize(appwinsize.GetWidth(),appwinsize.GetHeight()/3);
+    wxSize appwinsize = wxSize (win_screen.GetWidth()/8,win_screen.GetHeight()/4);
+    wxSize appwinsizebot = wxSize(appwinsize.GetWidth(),appwinsize.GetHeight()/2);
     
     //below are the height and width modifiers
     //int winsizeHeightInc = win_screen.GetHeight() / 3;
     //int winsizeWidthInc = win_screen.GetWidth() / 1.5;
     //winsize.IncBy(winsizeWidthInc, winsizeHeightInc);
 
-    wxPanel* panel_top = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
-    panel_top->SetBackgroundColour(wxColor(200, 100, 100));
-    Sizer->Add (panel_top, 1, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, 5);
 
-    wxPanel* panel_bottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsizebot ,wxTAB_TRAVERSAL,_("Bot"));
+    //first panel
+    wxPanel* panel_top = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize);
+    panel_top->SetBackgroundColour(wxColor(200, 100, 100));
+    Sizer->Add (panel_top, 2, wxEXPAND | wxTOP | wxLEFT | wxRIGHT, 5);
+
+    //second panel
+    wxPanel* panel_bottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsizebot );
     panel_bottom->SetBackgroundColour(wxColor(100,100,200));
     Sizer->Add(panel_bottom,1,wxEXPAND | wxALL,5);
-
+    
+    //size of calendar days button
     wxSize calsize = wxSize(appwinsize.GetWidth() /2, appwinsize.GetHeight() /2);
 
+    //sizer for cal
     wxSizer* cal_sizer = new wxBoxSizer(wxVERTICAL);
 
-    wxPanel* panel_cal = new wxPanel(panel_top, wxID_ANY, wxDefaultPosition , calsize, wxTAB_TRAVERSAL, _("Cal"));
+    wxPanel* panel_cal = new wxPanel(panel_top, wxID_ANY, wxDefaultPosition , calsize);
     panel_cal->SetBackgroundColour(wxColor(100, 150, 100));
     
-    cal_sizer->Add(panel_cal, 1, wxALIGN_CENTER  | wxALL , 5);
+    cal_sizer->Add(panel_cal, 0, wxALIGN_CENTER  | wxALL , 5);
 
     wxSize cellsize = wxSize(calsize.GetWidth()/7,calsize.GetHeight()/7);
     wxGridSizer* gs = new wxGridSizer(6,7,cellsize);
 
-    gs->Add(new wxButton(panel_cal, -1, _("Sun")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Mon")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Tue")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Wed")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Thu")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Fri")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_cal, -1, _("Sat")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_cal, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_cal, -1, wxT("")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Sun")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Mon")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Tue")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Wed")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Thu")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Fri")), 0, wxEXPAND);
+    gs->Add(new wxButton(panel_cal, panel_cal->GetId(), _("Sat")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_cal, panel_cal->GetId(), wxT("")), 0, wxEXPAND);
+    gs->Add(new wxStaticText(panel_cal, panel_cal->GetId(), wxT("")), 0, wxEXPAND);
 
     for (int i = 1; i < 30; i++)
     {
         wxString day_count = wxString::Format(wxT("%i"), i);
-        gs->Add(new wxButton (panel_cal,this->GetId(), day_count), 0, wxEXPAND);
+        gs->Add(new wxButton (panel_cal, panel_cal->GetId(), day_count), 0, wxEXPAND);
     }
 
     //buttons:
+    
+    
+    
+    //calling em sizers
     panel_cal->SetSizerAndFit(gs);
     panel_top->SetSizer(cal_sizer);
 

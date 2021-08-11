@@ -337,7 +337,7 @@ void Gregorian_DateTime::previous_month()
 
 
 // conversion functions
-/*
+
 Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 {
 	Darian_Date_Time dt_temp;
@@ -414,7 +414,7 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	return dt_temp;
 
 };
-*/
+
 
 //no of months
 int Gregorian_DateTime::get_no_of_months()

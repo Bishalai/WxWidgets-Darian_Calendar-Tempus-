@@ -187,7 +187,7 @@ void Darian_Date_Time::set_time(int hr, int min, int sec)
 	set_seconds(sec);
 };
 
-/*
+
 // set date time to current date and time taken from the gregorian one and then converted
 void Darian_Date_Time::set_now()
 {
@@ -200,7 +200,7 @@ void Darian_Date_Time::set_now()
 	set_date(dt_temp.get_year(), dt_temp.get_month(), dt_temp.get_sol());
 
 };
-*/
+
 
 //get functions now defined
 int Darian_Date_Time::get_hour()
@@ -347,7 +347,7 @@ void Darian_Date_Time::previous_month()
 	}
 };
 
-/*
+
 
 // conversion function darian to gregorian
 Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
@@ -431,7 +431,7 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 
 	return dt_temp;
 };
-*/
+
 
 int Darian_Date_Time::get_no_of_months()
 {

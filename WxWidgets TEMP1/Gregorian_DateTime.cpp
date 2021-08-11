@@ -243,23 +243,13 @@ string Gregorian_DateTime::get_month_name()
 //weekday name like sunday, monday, etc
 string Gregorian_DateTime::get_weekday_name()
 {
-	int week_id = 7;
-	week_id = week_id + g_day + (g_year - 2000) * 365 + ((g_year - 2000) / 4);
-	/// basically take count for changing weekday as it shifts by one/365 every year and by 2 for leap year, 
-	//saturday - 7 for 2000 and basically add days for the months now.
-	for (int i = 1; i < g_month; i++)
-	{
-		week_id += g_months_size[g_month];
-	}
-	week_id = week_id % 7;
-	if (week_id != 0)
-	{
-		return g_week_days[week_id];
-	}
-	else
-	{
-		return g_week_days[7];
-	}
+	static int t[] = { 0,3,2,5,0,3,5,1,4,6,2,4 };
+	
+	int temp = (g_year + g_year / 4 - g_year / 100 + g_year / 400 + t[g_month - 1] + g_day) % 7;
+	return g_week_days[temp + 1];
+
+
+
 };
 
 //returns no of days in month
@@ -277,11 +267,14 @@ int Gregorian_DateTime::get_no_of_days_in_month()
 
 
 // return first day of the month's weekday value; sunday, mondayand so on. till 7
-string Gregorian_DateTime::get_firstday_month()
+int Gregorian_DateTime::get_firstday_month()
 {
-	Gregorian_DateTime first_day_temp;
-	first_day_temp.set_date(g_year, g_month, 1);
-	return first_day_temp.get_weekday_name();
+	static int t[] = { 0,3,2,5,0,3,5,1,4,6,2,4 };
+
+	int temp = (g_year + g_year / 4 - g_year / 100 + g_year / 400 + t[g_month - 1] + 1) % 7;
+
+	return temp ;
+	
 };
 
 

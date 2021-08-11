@@ -20,6 +20,11 @@ MainWindow:: MainWindow(wxWindow* parent,
     SetIcon(Icon_xpm);
     
 
+    Gregorian_DateTime dt_now;
+    //dt_now.set_now();
+    dt_now.set_date(2021, 5, 2);
+
+
     //menubar
     wxMenuBar* menuBar = new wxMenuBar();
 
@@ -138,6 +143,8 @@ MainWindow:: MainWindow(wxWindow* parent,
     toolBar->Realize();
 
     
+    //--------------------------------------------------------------------------------------------------//
+
     //Sizers
     wxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
     wxSizer* sizer_top = new wxBoxSizer(wxVERTICAL);
@@ -167,8 +174,9 @@ MainWindow:: MainWindow(wxWindow* parent,
     //wxBitmapButton* button12 = new wxBitmapButton(panel_left, -1, bitmap, wxPoint(0, 0), wxSize(50, 50), 0);
 
 
-    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "DATE :", wxPoint(20, 80));
+    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "DATE :", wxPoint(win_screen.GetWidth() / 12, win_screen.GetHeight() / 8));
     wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "TIME :", wxPoint(20, 120));
+    wxStaticText* season = new wxStaticText(panel_left, wxID_ANY, dt_now.get_season_name(), wxPoint(80, 160));
     wxStaticText* text_ofseason = new wxStaticText(panel_left, wxID_ANY, "Season :", wxPoint(20, 160));
 
     wxPanel* panel_rightbottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
@@ -205,20 +213,22 @@ MainWindow:: MainWindow(wxWindow* parent,
     wxSize calsize = wxSize(appwinsize.GetWidth() / 2, appwinsize.GetHeight() / 2);
     wxSize cellsize = wxSize(calsize.GetWidth() / 20, calsize.GetHeight() / 7);
 
-    wxMessageDialog* dial = new wxMessageDialog(NULL, wxT("you are totally fucked mf!!"), wxT("hahahahahahahahahah"), wxOK | wxICON_ERROR);
+    
 
-    dial->ShowModal();
+    
 
     // month  view 
 
     wxGridSizer* gs = new wxGridSizer(6, 7, cellsize);
 
+    
+
 
     gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
     gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
     gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
 
-    gs->Add(new wxButton(panel_lefttop, -1, _("month,year ")), 1, wxEXPAND);
+    gs->Add(new wxButton(panel_lefttop, -1, _(dt_now.get_month_name())), 1, wxEXPAND);
 
     gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
     gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
@@ -231,10 +241,15 @@ MainWindow:: MainWindow(wxWindow* parent,
     gs->Add(new wxButton(panel_lefttop, -1, _("Thu")), 0, wxEXPAND);
     gs->Add(new wxButton(panel_lefttop, -1, _("Fri")), 0, wxEXPAND);
     gs->Add(new wxButton(panel_lefttop, -1, _("Sat")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    
+    
+    
+    for (int j = 0; j < dt_now.get_firstday_month(); j++)
+    {
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+    }
 
-    for (int i = 1; i < 30; i++)
+    for (int i = 1; i <= dt_now.get_no_of_days_in_month(); i++)
     {
         wxString day_count = wxString::Format(wxT("%i"), i);
         gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
@@ -245,6 +260,8 @@ MainWindow:: MainWindow(wxWindow* parent,
     //setting sizer
     SetSizerAndFit(Sizer);
     
+
+    //------------------------------------------------------------------------------------------//
 
     //statusbar
     wxDateTime dt = wxDateTime::Now();

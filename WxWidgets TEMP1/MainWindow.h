@@ -14,7 +14,8 @@
 #include "Date.xpm"
 #include "Time.xpm"
 #include<wx/display.h>
-
+#include "Gregorian_DateTime.h"
+#include "CalDateTime.h"
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif

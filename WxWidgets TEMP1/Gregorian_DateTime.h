@@ -139,7 +139,7 @@ public:
 
 
 	// return first day of the month's weekday value; sunday, mondayand so on. till 7
-	string get_firstday_month();
+	int get_firstday_month();
 
 	// other functions
 

@@ -149,7 +149,7 @@
     <ClCompile Include="CalDateTime.cpp" />
     <ClCompile Include="datetime.cpp" />
     <ClCompile Include="Events.cpp" />
-    <ClCompile Include="G_CalDateTime.cpp" />
+    <ClCompile Include="Gregorian_DateTime.cpp" />
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +157,7 @@
     <ClInclude Include="CalDateTime.h" />
     <ClInclude Include="datetime.h" />
     <ClInclude Include="Events.h" />
-    <ClInclude Include="G_CalDateTime.h" />
+    <ClInclude Include="Gregorian_DateTime.h" />
     <ClInclude Include="id.h" />
     <ClInclude Include="MainWindow.h" />
   </ItemGroup>

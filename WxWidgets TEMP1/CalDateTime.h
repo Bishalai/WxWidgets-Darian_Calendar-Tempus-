@@ -2,7 +2,7 @@
 
 #include<string>
 #include "MainWindow.h"
-#include "G_CalDateTime.h"
+#include "Gregorian_DateTime.h"
 
 
 using namespace std;
@@ -185,13 +185,13 @@ Darian_Date_Time::Darian_Date_Time()
 }
 
 void Darian_Date_Time::set_year(int y) {
-	if (y > 3000) //to reduce bugs and error
+	if (y > 739) //to reduce bugs and error
 	{
-		d_year = 3000;
+		d_year = 739;
 	}
-	else if (y < 2000)
+	else if (y < 207)
 	{
-		d_year = 2000;
+		d_year = 207;
 	}
 	else
 	{
@@ -411,9 +411,16 @@ string Darian_Date_Time::get_month_name()
 //weekday name like solis, lunae, etc
 string Darian_Date_Time::get_weekday_name()
 {
-	int week_id = d_sol & 7;
-	week_id += 1;
-	return d_week_days[week_id];
+	int week_id = d_sol % 7;
+	week_id;
+	if (week_id != 0)
+	{
+		return d_week_days[week_id];
+	}
+	else
+	{
+		return d_week_days[7];
+	}
 };
 
 //returns no of sols in month

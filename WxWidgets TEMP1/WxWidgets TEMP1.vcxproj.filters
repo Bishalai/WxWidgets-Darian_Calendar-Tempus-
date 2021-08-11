@@ -30,7 +30,7 @@
     <ClCompile Include="CalDateTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="G_CalDateTime.cpp">
+    <ClCompile Include="Gregorian_DateTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="CalDateTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="G_CalDateTime.h">
+    <ClInclude Include="Gregorian_DateTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

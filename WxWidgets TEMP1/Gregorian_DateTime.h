@@ -54,7 +54,7 @@ protected:
 		"Saturday"
 	};
 
-	const int g_months_size[13] =
+	int g_months_size[13] =
 	{
 		0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 	};
@@ -133,6 +133,9 @@ public:
 
 	//get corresponding input month name
 	string get_input_month_name(int n);
+
+	//get corresponding input week name
+	string get_input_week_name(int n);
 	
 
 	//returns no of days in month
@@ -159,7 +162,8 @@ public:
 
 	Darian_Date_Time convert_to_darian();
 
-
+	// increase by a second
+	void increase();
 
 
 	//destructor

@@ -164,6 +164,15 @@ public:
 	// conversion functions;
 	Gregorian_DateTime convert_to_Gregorian();
 
+	//get inpur month game
+	string get_input_month_name( int n);
+
+	//get corresponding input week name
+	string get_input_week_name(int n);
+
+
+	//increase by a second
+	void increase();
 
 
 	//..destructor

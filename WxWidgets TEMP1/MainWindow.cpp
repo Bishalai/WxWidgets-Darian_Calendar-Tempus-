@@ -4,37 +4,57 @@
 
 
 BEGIN_EVENT_TABLE(MainWindow, wxFrame)
-    EVT_MENU(wxID_EXIT , MainWindow::onQuit)
-    EVT_CLOSE(MainWindow::onClose)
+EVT_MENU(wxID_EXIT, MainWindow::onQuit)
+EVT_CLOSE(MainWindow::onClose)
 END_EVENT_TABLE()
 
-MainWindow:: MainWindow(wxWindow* parent,
+
+static int cal_status = 1;// of for gregorian, 1 for darian
+static int view_status = 0;// 0 for months and 1 for year view
+
+
+//----------------------------------------date time objects ----------------------------------------------//
+Gregorian_DateTime dt_now1;
+Gregorian_DateTime *dt_now = &dt_now1;
+
+Darian_Date_Time d_dt_now1;
+Darian_Date_Time *d_dt_now =&d_dt_now1;
+
+wxTextCtrl* secup;
+//------------------------------------------------------------------------------------------------////
+
+
+
+
+MainWindow::MainWindow(wxWindow* parent,
     wxWindowID id,
     const wxString& title,
-    const wxPoint& pos ,
-    const wxSize& size ,
-    long style ,
-    const wxString& name):
+    const wxPoint& pos,
+    const wxSize& size,
+    long style,
+    const wxString& name) :
     wxFrame(parent, id, title, pos, size, style, name)
 {
     SetIcon(Icon_xpm);
-    
+
     SetMaxSize(wxSize(1000, 600));
 
-    Gregorian_DateTime dt_now;
-    //dt_now.set_now();
-    dt_now.set_date(2021, 5, 2);
+    //--set date, time to now===================//
+    dt_now->set_now();
+    
+    d_dt_now->set_now();
+    //-----------------------------------------------//
 
-
-    //menubar
+    //-------------------------------------------------------------------------------------------------------//
+    //menubar--------------------------------------------------------------------------------------------//
     wxMenuBar* menuBar = new wxMenuBar();
 
     //Home menu in menubar
     wxMenu* HomeMenu = new wxMenu();
     menuBar->Append(HomeMenu, _("&Home"));//& for the acceleratot, can use alt fun
-    
+
     //wxmenu item
-    
+
     //home menu items
 
     //georgian menu item
@@ -55,8 +75,8 @@ MainWindow:: MainWindow(wxWindow* parent,
     wxMenuItem* quitItem = new wxMenuItem(HomeMenu, wxID_EXIT);
     quitItem->SetBitmap(wxArtProvider::GetBitmap("wxART_QUIT"));
     HomeMenu->Append(quitItem);
-    
-                                          
+
+
     //options menu in menubar
     wxMenu* optionsMenu = new wxMenu();
     menuBar->Append(optionsMenu, _("&Options"));
@@ -74,11 +94,11 @@ MainWindow:: MainWindow(wxWindow* parent,
     Bind(wxEVT_MENU, &MainWindow::onsetTime, this, setTime->GetId());
 
     optionsMenu->AppendSeparator();
-    
+
     //view submenu in options
     wxMenu* viewsubMenu = new wxMenu();
-    
-    
+
+
     //for year view
     wxBitmap YearBmp(Year_xpm);
     wxMenuItem* switchToYear = viewsubMenu->Append(wxID_ANY, _("&To Year"));
@@ -96,7 +116,7 @@ MainWindow:: MainWindow(wxWindow* parent,
     //help menu in menubar
     wxMenu* helpMenu = new wxMenu();
     menuBar->Append(helpMenu, _("&Help"));
-    
+
     //help item
     wxMenuItem* helpItem = helpMenu->Append(wxID_HELP);
     helpItem->SetBitmap(wxArtProvider::GetBitmap("wxART_HELP", wxART_OTHER, wxSize(16,16)));
@@ -105,28 +125,31 @@ MainWindow:: MainWindow(wxWindow* parent,
     //set the Menu
     SetMenuBar(menuBar);
 
+    //---------------------------------------------------------------------------------------------------------//
+
+    //========================================================================================================//
     //toolbar setup
     wxToolBar* toolBar = CreateToolBar();
-    
+
     //georgian tool
     toolBar->AddTool(GeorgianItem->GetId(), _("Georgian Calendar"),GeorgianItem->GetBitmap() ,_("Switch to Georgian Calendar"));
-    
+
     //darian tool
     toolBar->AddTool(DarianItem->GetId(), _("Darian Calendar"), DarianItem->GetBitmap(), _("Switch to Darian Calendar"));
 
     toolBar->AddSeparator();
-    
+
     //month view tool
     toolBar->AddTool(switchToMonth->GetId(), _("Months View"), switchToMonth->GetBitmap(), _("Switch to Months view"));
-    
+
     //year view tool
     toolBar->AddTool(switchToYear->GetId(), _("Year view"), switchToYear->GetBitmap(), _("Switch to Year View"));
-    
+
     toolBar->AddSeparator();
 
     //date set date tool
     toolBar->AddTool(setDate->GetId(), _("setDate"), setDate->GetBitmap(), _("Set the date"));
-    
+
     //time set time tool
     toolBar->AddTool(setTime->GetId(), _("setTime"), setTime->GetBitmap(), _("Set the time"));
 
@@ -142,9 +165,10 @@ MainWindow:: MainWindow(wxWindow* parent,
     toolBar->AddTool(helpItem->GetId(), _("Help"), helpItem->GetBitmap() , _("Help"));
 
     toolBar->Realize();
-
     
+
     //--------------------------------------------------------------------------------------------------//
+    //======================================================================================================//
 
     //Sizers
     wxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -157,10 +181,7 @@ MainWindow:: MainWindow(wxWindow* parent,
     wxSize appwinsize = wxSize(win_screen.GetWidth() / 8, win_screen.GetHeight() / 8);
     wxSize appwinsizebot = wxSize(appwinsize.GetWidth(), appwinsize.GetHeight() / 3);
 
-    //below are the height and width modifiers
-    //int winsizeHeightInc = win_screen.GetHeight() / 3;
-    //int winsizeWidthInc = win_screen.GetWidth() / 1.5;
-    //winsize.IncBy(winsizeWidthInc, winsizeHeightInc);
+ 
 
     wxPanel* panel_left = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
     panel_left->SetBackgroundColour(wxColor(100, 150, 200));
@@ -168,17 +189,69 @@ MainWindow:: MainWindow(wxWindow* parent,
     wxPanel* panel_lefttop = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
     panel_lefttop->SetBackgroundColour(wxColor(100, 100, 150));
 
-    wxButton* prevbutton = new wxButton(panel_left, wxID_ANY, "prev", wxPoint(appwinsize.GetWidth()-70, 0), wxDefaultSize);
+    wxButton* prevbutton = new wxButton(panel_left, wxID_ANY, "prev", wxPoint(appwinsize.GetWidth()-60, 0), wxDefaultSize);
 
     //wxBitmap bitmap;
     //bitmap.LoadFile("‪D:\Photos\Messenger\123.jpeg", wxBITMAP_TYPE_JPEG);                                        //  //bitmapbutton didnt load :/
     //wxBitmapButton* button12 = new wxBitmapButton(panel_left, -1, bitmap, wxPoint(0, 0), wxSize(50, 50), 0);
 
 
-    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "DATE :", wxPoint(appwinsize.GetWidth() / 12, appwinsize.GetHeight() / 8));
-    wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "TIME :", wxPoint(20, 120));
-    wxStaticText* season = new wxStaticText(panel_left, wxID_ANY, dt_now.get_season_name(), wxPoint(80, 160));
+   
+    // display value of date, time, season---------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------------------------------------------//
+
+    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "Date:", wxPoint(20, 80));
+    wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "Time:", wxPoint(20, 120));
+
     wxStaticText* text_ofseason = new wxStaticText(panel_left, wxID_ANY, "Season :", wxPoint(20, 160));
+
+    // variable depending upon the calendar status------------------------------------------------------------//
+    
+    if (cal_status == 0)// gregorian
+    {
+        wxString g_date_year = wxString::Format(wxT("%i"), dt_now->get_year());
+        wxString g_date_month = wxString::Format(wxT("%s"), dt_now->get_month_name());
+        wxString g_date_day = wxString::Format(wxT("%i"), dt_now->get_day());
+        wxString g_date_temp = g_date_day + " " + g_date_month + " " + g_date_year;
+
+        wxStaticText* g_date_text = new wxStaticText(panel_left, wxID_ANY, g_date_temp, wxPoint(80, 80));
+
+        wxString g_time_hour = wxString::Format(wxT("%i"), dt_now->get_hour());
+        wxString g_time_minute = wxString::Format(wxT("%i"), dt_now->get_minute());
+        wxString g_time_seconds = wxString::Format(wxT("%i"), dt_now->get_seconds());
+        wxString g_time_temp = g_time_hour + " : " + g_time_minute + " : " + g_time_seconds;
+
+        wxTextCtrl* g_time_text = new wxTextCtrl(panel_left, wxID_ANY, g_time_temp, wxPoint(80, 120));
+        secup = g_time_text;
+
+
+        wxStaticText* g_season = new wxStaticText(panel_left, wxID_ANY, dt_now->get_season_name(), wxPoint(80, 160));
+    }
+    else
+    {
+        wxString d_date_year = wxString::Format(wxT("%i"), d_dt_now->get_year());
+        wxString d_date_month = wxString::Format(wxT("%s"), d_dt_now->get_month_name());
+        wxString d_date_sol = wxString::Format(wxT("%i"), d_dt_now->get_sol());
+        wxString d_date_temp = d_date_sol + " " + d_date_month + " " + d_date_year;
+
+        wxStaticText* d_date_text = new wxStaticText(panel_left, wxID_ANY, d_date_temp, wxPoint(80, 80));
+
+        wxString d_time_hour = wxString::Format(wxT("%i"), d_dt_now->get_hour());
+        wxString d_time_minute = wxString::Format(wxT("%i"), d_dt_now->get_minute());
+        wxString d_time_seconds = wxString::Format(wxT("%i"), d_dt_now->get_seconds());
+        wxString d_time_temp = d_time_hour + " : " + d_time_minute + " : " + d_time_seconds;
+
+        wxTextCtrl* d_time_text = new wxTextCtrl(panel_left, wxID_ANY, d_time_temp, wxPoint(80, 120));
+        secup = d_time_text;
+
+
+        wxStaticText* d_season = new wxStaticText(panel_left, wxID_ANY, d_dt_now->get_season_name(), wxPoint(80, 160));
+
+    }
+
+    //--------------------------------------------------------------------------------------------------------------/
+    //-------------------------------------------------------------------------------------------------------------//
+
 
     wxPanel* panel_rightbottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
     panel_rightbottom->SetBackgroundColour(wxColor(150, 100, 100));
@@ -216,76 +289,158 @@ MainWindow:: MainWindow(wxWindow* parent,
 
     wxSize cellmonthsize = wxSize(calsize.GetWidth() / 10, calsize.GetHeight() / 5);
 
-   
 
+    wxGridSizer* gs = new wxGridSizer(5, 3, cellsize);;
 
-    //year view
+    //------------------------------------gregorian calendar-----------------------------------//
+    //---------------------------year view for gregorian-----------------------------------//
 
-    wxGridSizer* gs = new wxGridSizer(4,3, cellsize);
-    
-   
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-
-    wxString year_count = wxString::Format(wxT("%i"),dt_now.get_year());
-    gs->Add(new wxButton(panel_lefttop, -1, year_count), 1, wxEXPAND);
-
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    
-
-    for (int i = 1; i <= dt_now.get_no_of_months(); i++)
+    if (cal_status == 0 && view_status == 1)
     {
-        wxString day_count = wxString::Format(wxT("%s"), dt_now.get_input_month_name(i) );
-        gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
-    }
+        gs = new wxGridSizer(5, 3, cellsize);
 
 
-    /*
-     // month  view
-    wxGridSizer* gs = new wxGridSizer(6, 7, cellsize);
-
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-
-    gs->Add(new wxButton(panel_lefttop, -1, _(dt_now.get_month_name())), 1, wxEXPAND);
-
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-    gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
-
-    gs->Add(new wxButton(panel_lefttop, -1, _("Sun")), 1, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Mon")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Tue")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Wed")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Thu")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Fri")), 0, wxEXPAND);
-    gs->Add(new wxButton(panel_lefttop, -1, _("Sat")), 0, wxEXPAND);
-    
-    
-    
-    for (int j = 0; j < dt_now.get_firstday_month(); j++)
-    {
         gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+        wxString year_count = wxString::Format(wxT("%i"), dt_now->get_year());
+        wxString year_month = wxString::Format(wxT("%s"), dt_now->get_month_name());
+        wxString header_year = year_month + " " + year_count;
+        gs->Add(new wxButton(panel_lefttop, -1, header_year), 1, wxEXPAND);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+
+        for (int i = 1; i <= dt_now->get_no_of_months(); i++)
+        {
+            wxString day_count = wxString::Format(wxT("%s"), dt_now->get_input_month_name(i));
+            gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+        }
+
+    }
+    
+     //------------------------------ month  view-----------------------------------------------///
+    else if (cal_status == 0 && view_status == 0)
+    {
+        gs = new wxGridSizer(6, 7, cellsize);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+        wxString year_count = wxString::Format(wxT("%i"), dt_now->get_year());
+        wxString year_month = wxString::Format(wxT("%s"), dt_now->get_month_name());
+        wxString header_year = year_month + " " + year_count;
+        gs->Add(new wxButton(panel_lefttop, -1, header_year), 1, wxEXPAND);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        
+        
+        for (int i = 1; i <= 7;i++)
+        {
+            wxString weekday_count = wxString::Format(wxT("%s"), dt_now->get_input_week_name(i));
+            gs->Add(new wxButton(panel_lefttop, -1, weekday_count), 1, wxEXPAND);
+        }
+
+
+
+        for (int j = 0; j < dt_now->get_firstday_month(); j++)
+        {
+            gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        }
+
+        for (int i = 1; i <= dt_now->get_no_of_days_in_month(); i++)
+        {
+            wxString day_count = wxString::Format(wxT("%i"), i);
+            gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+        }
+
     }
 
-    for (int i = 1; i <= dt_now.get_no_of_days_in_month(); i++)
+    //------------------------------for darian views-----------------------------------------//
+
+    //---------------------------year view for darian-----------------------------------//
+
+    else if (cal_status == 1 && view_status == 1)
     {
-        wxString day_count = wxString::Format(wxT("%i"), i);
-        gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+        gs = new wxGridSizer(9, 3, cellsize);
+
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+        wxString year_count = wxString::Format(wxT("%i"), d_dt_now->get_year());
+        wxString year_month = wxString::Format(wxT("%s"), d_dt_now->get_month_name());
+        wxString header_year = year_month + " " + year_count;
+        gs->Add(new wxButton(panel_lefttop, -1, header_year), 1, wxEXPAND);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+
+        for (int i = 1; i <= d_dt_now->get_no_of_months(); i++)
+        {
+            wxString day_count = wxString::Format(wxT("%s"), d_dt_now->get_input_month_name(i));
+            gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+        }
+
     }
-    */
+
+
+    //--------------------------------month vew darian-----------------------------------------//
+
+
+    else if (cal_status == 1 && view_status == 0)
+    {
+        gs = new wxGridSizer(6, 7, cellsize);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+        wxString year_count = wxString::Format(wxT("%i"), d_dt_now->get_year());
+        wxString year_month = wxString::Format(wxT("%s"), d_dt_now->get_month_name());
+        wxString header_year = year_month + " " + year_count;
+        gs->Add(new wxButton(panel_lefttop, -1, header_year), 1, wxEXPAND);
+
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+        gs->Add(new wxStaticText(panel_lefttop, -1, wxT("")), 0, wxEXPAND);
+
+
+        for (int i = 1; i <= 7;i++)
+        {
+            wxString weekday_count = wxString::Format(wxT("%s"), d_dt_now->get_input_week_name(i));
+            gs->Add(new wxButton(panel_lefttop, -1, weekday_count), 1, wxEXPAND);
+        }
+        
+
+
     
-    //buttons:
+
+        for (int i = 1; i <= d_dt_now->get_no_of_days_in_month(); i++)
+        {
+            wxString day_count = wxString::Format(wxT("%i"), i);
+            gs->Add(new wxButton(panel_lefttop, this->GetId(), day_count), 0, wxEXPAND);
+        }
+
+    }
+
+
+
+
+    //-----------------------------------------------------------------------------------------------//
+
+    //calling gs:
     panel_lefttop->SetSizerAndFit(gs);
 
 
 
     //setting sizer
     SetSizerAndFit(Sizer);
-    
+
 
     //------------------------------------------------------------------------------------------//
-
+    
     //statusbar
     wxDateTime dt = wxDateTime::Now();
     const int status_size = 3;
@@ -296,12 +451,47 @@ MainWindow:: MainWindow(wxWindow* parent,
     int status_width[status_size] = {-4,-4,-1};
     statusBar->SetStatusWidths(status_size, status_width);
     
+    wxTimer* sectimer = new wxTimer(this);
+    Bind (wxEVT_TIMER, &MainWindow::OnTimer,this, sectimer->GetId());
+    sectimer->Start(1000);
 
 }
+
+
+void MainWindow::OnTimer(wxTimerEvent& event)
+{
+    if (cal_status == 0)
+    {
+        dt_now->increase();
+        
+        wxString g_time_hour = wxString::Format(wxT("%i"), dt_now->get_hour());
+        wxString g_time_minute = wxString::Format(wxT("%i"), dt_now->get_minute());
+        wxString g_time_seconds = wxString::Format(wxT("%i"), dt_now->get_seconds());
+        wxString g_time_temp = g_time_hour + " : " + g_time_minute + " : " + g_time_seconds;
+        secup->ChangeValue(g_time_temp);
+    }
+    else
+    {
+        d_dt_now->increase();
+
+        wxString d_time_hour = wxString::Format(wxT("%i"), d_dt_now->get_hour());
+        wxString d_time_minute = wxString::Format(wxT("%i"), d_dt_now->get_minute());
+        wxString d_time_seconds = wxString::Format(wxT("%i"), d_dt_now->get_seconds());
+        wxString d_time_temp = d_time_hour + " : " + d_time_minute + " : " + d_time_seconds;
+        secup->ChangeValue(d_time_temp);
+    }
+   
+    MainWindow::Update();
+};
+
+
+
+
 
 void MainWindow::onGeorgian(wxCommandEvent& event)
 {
     wxMessageBox("set to Georgian Calendar");
+
     PushStatusText(_("Set to Gregorian Calendar"));
     wxSleep(1);
     PopStatusText();
@@ -373,11 +563,13 @@ void MainWindow::onClose(wxCloseEvent& event)
             return;
         }
     };
+  
     Destroy();
+
 };
 
 
-MainWindow::~MainWindow()
-{
+    MainWindow::~MainWindow()
+    {
+    }
 
-}

@@ -2,6 +2,7 @@
 #pragma once
 
 #include<wx/wxprec.h>
+#include<wx/timer.h>
 #include<string>
 #include"datetime.h"
 #include <wx/artprov.h>
@@ -16,6 +17,9 @@
 #include<wx/display.h>
 #include "Gregorian_DateTime.h"
 #include "CalDateTime.h"
+
+
+
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
@@ -32,7 +36,7 @@ public:
         const wxString& name = wxASCII_STR(wxFrameNameStr));
 
         ~MainWindow();
-
+        
         void onGeorgian(wxCommandEvent& event);
         void onDarian(wxCommandEvent& event);
         void onQuit(wxCommandEvent& event);
@@ -41,10 +45,12 @@ public:
         void onsetTime(wxCommandEvent& event);
         void onswitchYear(wxCommandEvent& event);
         void onswitchMonth(wxCommandEvent& event);
+
+        void OnTimer(wxTimerEvent& event);
         
         void onClose(wxCloseEvent& event);
 
         DECLARE_EVENT_TABLE()
-
+        
 };
 

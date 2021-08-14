@@ -432,6 +432,29 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 	return dt_temp;
 };
 
+void Darian_Date_Time::increase()
+{
+	d_seconds += 1;
+	d_minute += d_seconds / 60;
+	d_minute += d_seconds / 60;
+	d_seconds = d_seconds % 60;
+	d_minute = d_minute % 60;
+	d_hour = d_hour % 24;
+
+};
+
+string Darian_Date_Time::get_input_month_name(int n)
+{
+	return d_months_name[n];
+};
+
+//get corresponding input month name
+string Darian_Date_Time::get_input_week_name(int n)
+{
+	return d_week_days[n];
+};
+
+
 
 int Darian_Date_Time::get_no_of_months()
 {

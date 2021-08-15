@@ -840,7 +840,7 @@ void MainWindow::onPrevButton(wxCommandEvent& event)
 
     Sizer->Layout();
 
-    wxMessageBox(_("prevbutton called"));
+    //wxMessageBox(_("prevbutton called"));
 
     PushStatusText(_("Previous Button Clicked!"));
     wxSleep(1);
@@ -933,7 +933,7 @@ void MainWindow::onNextButton(wxCommandEvent& event)
 
     Sizer->Layout();
 
-    wxMessageBox(_("nextbutton called"));
+    //wxMessageBox(_("nextbutton called"));
 
     PushStatusText(_("Next Button Clicked!"));
     wxSleep(1);

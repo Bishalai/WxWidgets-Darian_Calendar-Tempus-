@@ -274,7 +274,7 @@ string Darian_Date_Time::get_weekday_name()
 //returns no of sols in month
 int Darian_Date_Time::get_no_of_days_in_month()
 {
-	if (check_leap_year() && d_month % 6 == 0)
+	if (check_leap_year() && d_month % 24 == 0)
 	{
 		return d_months_size[d_month] + 1;
 	}
@@ -295,21 +295,21 @@ string Darian_Date_Time::get_firstday_month()
 
 
 
-// check for leap year
+// check for leap year 668 for even except divisble by 10. 669 for others
 bool Darian_Date_Time::check_leap_year()
 {
 	if (d_year % 2 != 0)
 	{
 		return true;
 	}
-	else if (d_year % 10 == 0)
+	if (d_year % 10 == 0)
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	
+	
+	return false;
+	
 
 };
 

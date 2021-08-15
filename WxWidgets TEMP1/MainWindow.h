@@ -78,6 +78,7 @@ private:
     wxDisplay win_display;
     wxRect win_screen = win_display.GetClientArea();
     wxSize appwinsize = wxSize(win_screen.GetWidth() / 8, win_screen.GetHeight() / 8);
+    
     wxSize appwinsizebot = wxSize(appwinsize.GetWidth(), appwinsize.GetHeight() / 3);
     wxSize calsize = wxSize(appwinsize.GetWidth() / 2, appwinsize.GetHeight() / 2);
     wxSize cellsize = wxSize(calsize.GetWidth() / 20, calsize.GetHeight() / 7);
@@ -95,6 +96,8 @@ private:
     wxPanel* panel_d_month = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
 
     wxPanel* panel_d_year = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+    wxPanel* panel_right = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
 
 
 
@@ -117,6 +120,9 @@ public:
         void onsetTime(wxCommandEvent& event);
         void onswitchYear(wxCommandEvent& event);
         void onswitchMonth(wxCommandEvent& event);
+
+        void onPrevButton(wxCommandEvent& event);
+        void onNextButton(wxCommandEvent& event);
 
 
         //for display

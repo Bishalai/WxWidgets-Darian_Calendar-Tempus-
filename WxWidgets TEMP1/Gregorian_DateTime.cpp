@@ -447,13 +447,29 @@ void Gregorian_DateTime::increase()
 	g_minute += (g_seconds / 60);
 	g_hour += (g_minute / 60);
 	g_day += (g_hour / 24);
-	g_month += (g_day / g_months_size[g_month]);
+
+	if (g_month<=12)
+	{
+		g_month += (g_day / g_months_size[g_month]);
+	}
+	else
+	{
+		g_month += (g_day / g_months_size[1]);
+	}
 	g_year += (g_month / 12);
 	g_seconds = (g_seconds % 60);
 	g_minute = (g_minute % 60);
 	g_hour = (g_hour % 24);
+	if (g_month!=12)
+	{
+		g_month = (g_month % 12);
+	}
+	else
+	{
+		g_month = 12;
+	}
 	g_day = (g_day % g_months_size[g_month]);
-	g_month = (g_month % 12);
+	
 
 };
 

@@ -25,7 +25,9 @@ MainWindow::MainWindow(wxWindow* parent,
 {
     SetIcon(Icon_xpm);
 
-    SetMaxSize(wxSize(800, 700));
+    SetMinSize(wxSize(700,500));
+
+    SetMaxSize(wxSize(1000, 700));
 
     //--set date, time to now===================//
     g_dt_now.set_now();
@@ -170,7 +172,7 @@ MainWindow::MainWindow(wxWindow* parent,
     
     panel_left->SetBackgroundColour(wxColor(100, 150, 200));    
 
-    wxButton* prevbutton = new wxButton(panel_left, wxID_ANY, "prev", wxPoint(0, 0), wxDefaultSize);
+    wxButton* prevbutton = new wxButton(panel_left, wxID_ANY, "Prev", wxPoint(0, 0), wxDefaultSize);
     
     wxButton* toprightbottom1 = new wxButton(panel_left, wxID_ANY, " Next ", wxPoint(appwinsize.GetWidth() - 60, 0), wxDefaultSize);
 
@@ -183,10 +185,10 @@ MainWindow::MainWindow(wxWindow* parent,
     // display value of date, time, season---------------------------------------------------------------------------//
     //--------------------------------------------------------------------------------------------------------------//
 
-    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "Date:", wxPoint(20, 80));
-    wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "Time:", wxPoint(20, 120));
+    wxStaticText* text_ofdate1 = new wxStaticText(panel_left, wxID_ANY, "Date:", wxPoint(20, 60));
+    wxStaticText* text_oftime = new wxStaticText(panel_left, wxID_ANY, "Time:", wxPoint(20, 90));
 
-    wxStaticText* text_ofseason = new wxStaticText(panel_left, wxID_ANY, "Season :", wxPoint(20, 160));
+    wxStaticText* text_ofseason = new wxStaticText(panel_left, wxID_ANY, "Season :", wxPoint(20, 120));
 
     // variable depending upon the calendar status------------------------------------------------------------//
 
@@ -197,7 +199,7 @@ MainWindow::MainWindow(wxWindow* parent,
         wxString g_date_day = wxString::Format(wxT("%i"), g_dt_now.get_day());
         wxString g_date_temp = g_date_day + " " + g_date_month + " " + g_date_year;
 
-        wxTextCtrl* g_date_text = new wxTextCtrl(panel_left, -1, g_date_temp, wxPoint(80, 80), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* g_date_text = new wxTextCtrl(panel_left, -1, g_date_temp, wxPoint(80, 60), wxDefaultSize, wxTE_READONLY);
         dateup = g_date_text;
 
         wxString g_time_hour = wxString::Format(wxT("%i"), g_dt_now.get_hour());
@@ -205,11 +207,11 @@ MainWindow::MainWindow(wxWindow* parent,
         wxString g_time_seconds = wxString::Format(wxT("%i"), g_dt_now.get_seconds());
         wxString g_time_temp = g_time_hour + " : " + g_time_minute + " : " + g_time_seconds;
 
-        wxTextCtrl* g_time_text = new wxTextCtrl(panel_left, wxID_ANY, g_time_temp, wxPoint(80, 120), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* g_time_text = new wxTextCtrl(panel_left, wxID_ANY, g_time_temp, wxPoint(80, 90), wxDefaultSize, wxTE_READONLY);
         secup = g_time_text;
 
 
-        wxTextCtrl* g_season = new wxTextCtrl(panel_left, -1, g_dt_now.get_season_name(), wxPoint(80, 160), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* g_season = new wxTextCtrl(panel_left, -1, g_dt_now.get_season_name(), wxPoint(80, 120), wxDefaultSize, wxTE_READONLY);
         seasonup = g_season;
 
     }
@@ -220,7 +222,7 @@ MainWindow::MainWindow(wxWindow* parent,
         wxString d_date_sol = wxString::Format(wxT("%i"), d_dt_now.get_sol());
         wxString d_date_temp = d_date_sol + " " + d_date_month + " " + d_date_year;
 
-        wxTextCtrl* d_date_text = new wxTextCtrl(panel_left, wxTE_READONLY, d_date_temp, wxPoint(80, 80), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* d_date_text = new wxTextCtrl(panel_left, wxTE_READONLY, d_date_temp, wxPoint(80, 60), wxDefaultSize, wxTE_READONLY);
         dateup = d_date_text;
 
         wxString d_time_hour = wxString::Format(wxT("%i"), d_dt_now.get_hour());
@@ -228,11 +230,11 @@ MainWindow::MainWindow(wxWindow* parent,
         wxString d_time_seconds = wxString::Format(wxT("%i"), d_dt_now.get_seconds());
         wxString d_time_temp = d_time_hour + " : " + d_time_minute + " : " + d_time_seconds;
 
-        wxTextCtrl* d_time_text = new wxTextCtrl(panel_left, wxID_ANY, d_time_temp, wxPoint(80, 120), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* d_time_text = new wxTextCtrl(panel_left, wxID_ANY, d_time_temp, wxPoint(80, 90), wxDefaultSize, wxTE_READONLY);
         secup = d_time_text;
 
 
-        wxTextCtrl* d_season = new wxTextCtrl(panel_left, wxTE_READONLY, d_dt_now.get_season_name(), wxPoint(80, 160), wxDefaultSize, wxTE_READONLY);
+        wxTextCtrl* d_season = new wxTextCtrl(panel_left, wxTE_READONLY, d_dt_now.get_season_name(), wxPoint(80, 120), wxDefaultSize, wxTE_READONLY);
         seasonup = d_season;
     }
 
@@ -262,7 +264,7 @@ MainWindow::MainWindow(wxWindow* parent,
     wxCheckBox* checkbox4 = new wxCheckBox(panel_topright, wxID_ANY, wxT("year"), wxPoint(20, 140), wxDefaultSize);
     checkbox4->SetValue(false);
     */
-    Sizer->Add(panel_left, 1, wxEXPAND );
+    Sizer->Add(panel_left, 0, wxEXPAND );
     
     Sizer->Add(panel_g_month, 3, wxEXPAND );
     Sizer->Add(panel_g_year, 3, wxEXPAND );
@@ -603,7 +605,7 @@ void MainWindow::onGeorgian(wxCommandEvent& event)
 
     cal_status = 0; //the current status changed to gregorian
 
-    wxMessageBox("set to Georgian Calendar");
+    //wxMessageBox("set to Georgian Calendar");
 
     PushStatusText(_("Set to Gregorian Calendar"));
     wxSleep(1);
@@ -657,7 +659,7 @@ void MainWindow::onDarian(wxCommandEvent& event)
     cal_status = 1;// the current cal_status changed to darian;
 
 
-    wxMessageBox("set to Darian Calendar");
+    //wxMessageBox("set to Darian Calendar");
     PushStatusText(_("Set to Darian Calendar"));
     wxSleep(1);
     PopStatusText();
@@ -707,7 +709,7 @@ void MainWindow::onswitchYear(wxCommandEvent& event)
 
     view_status = 1; // current view status changed to year
     
-    wxMessageBox("Year View");
+    //wxMessageBox("Year View");
     PushStatusText(_("Year View Set"));
     wxSleep(1);
     PopStatusText();
@@ -742,7 +744,7 @@ void MainWindow::onswitchMonth(wxCommandEvent& event)
 
     view_status = 0;//view status updated to month
 
-    wxMessageBox("Month View");
+    //wxMessageBox("Month View");
     PushStatusText(_("Month View Set"));
     wxSleep(1);
 

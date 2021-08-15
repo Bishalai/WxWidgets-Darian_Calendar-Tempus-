@@ -1,19 +1,21 @@
-
 #define _CRT_SECURE_NO_WARNINGS
 #pragma once
 
 #include <string>
-//#include "datetime.h"
-#include <Gregorian_DateTime.h>
+#include "datetime.h"
+#include "Gregorian_DateTime.h"
 
 
 using namespace std;
+
+
+
 
 class Gregorian_DateTime;
 
 
 // class dor darian calendar
-class Darian_Date_Time
+class Darian_Date_Time 
 {
 protected:
 	// reqired constants
@@ -116,7 +118,7 @@ public:
 	void set_month(int m);
 	void set_sol(int d);
 	void set_hour(int h);
-	void set_minute(int m);
+	void set_minute(int m) ;
 	void set_seconds(int s);
 
 
@@ -162,9 +164,22 @@ public:
 	// conversion functions;
 	Gregorian_DateTime convert_to_Gregorian();
 
+	//get inpur month game
+	string get_input_month_name( int n);
+
+	//get corresponding input week name
+	string get_input_week_name(int n);
+
+
+	//increase by a second
+	void increase();
 
 
 	//..destructor
 	~Darian_Date_Time();
 
 };
+
+
+
+

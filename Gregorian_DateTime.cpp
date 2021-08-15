@@ -149,6 +149,7 @@ void Gregorian_DateTime::set_seconds(int s)
 	}
 };
 
+
 //set date time to current date and time taken from the gregorian one and then converted
 void Gregorian_DateTime::set_now()
 {
@@ -169,11 +170,12 @@ void Gregorian_DateTime::set_now()
 		daysofyear -= 1;
 	}
 
-	do
+	while (daysofyear >= g_months_size[i])
 	{
-		daysofyear -= g_months_size[i];
+		
+		daysofyear = daysofyear - g_months_size[i];
 		i++;
-	} while (daysofyear >= g_months_size[i]);
+	} 
 
 	int month = i;
 	set_date(year, month, day);
@@ -242,23 +244,13 @@ string Gregorian_DateTime::get_month_name()
 //weekday name like sunday, monday, etc
 string Gregorian_DateTime::get_weekday_name()
 {
-	int week_id = 7;
-	week_id = week_id + g_day + (g_year - 2000) * 365 + ((g_year - 2000) / 4);
-	/// basically take count for changing weekday as it shifts by one/365 every year and by 2 for leap year, 
-	//saturday - 7 for 2000 and basically add days for the months now.
-	for (int i = 1; i < g_month; i++)
-	{
-		week_id += g_months_size[g_month];
-	}
-	week_id = week_id % 7;
-	if (week_id != 0)
-	{
-		return g_week_days[week_id];
-	}
-	else
-	{
-		return g_week_days[7];
-	}
+	static int t[] = { 0,3,2,5,0,3,5,1,4,6,2,4 };
+	
+	int temp = (g_year + g_year / 4 - g_year / 100 + g_year / 400 + t[g_month - 1] + g_day) % 7;
+	return g_week_days[temp + 1];
+
+
+
 };
 
 //returns no of days in month
@@ -275,12 +267,22 @@ int Gregorian_DateTime::get_no_of_days_in_month()
 };
 
 
-// return first day of the month's weekday value; sunday, mondayand so on. till 7
-string Gregorian_DateTime::get_firstday_month()
+//get corresponding input month name
+string Gregorian_DateTime::get_input_month_name(int n)
 {
-	Gregorian_DateTime first_day_temp;
-	first_day_temp.set_date(g_year, g_month, 1);
-	return first_day_temp.get_weekday_name();
+	return g_months_name[n];
+};
+
+
+// return first day of the month's weekday value; sunday, mondayand so on. till 7
+int Gregorian_DateTime::get_firstday_month()
+{
+	static int t[] = { 0,3,2,5,0,3,5,1,4,6,2,4 };
+
+	int temp = (g_year + g_year / 4 - g_year / 100 + g_year / 400 + t[g_month - 1] + 1) % 7;
+
+	return temp ;
+	
 };
 
 
@@ -345,18 +347,18 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 
 	float totaldayshours;
 
-	totaldayshours = ((g_year - 2000) * 365 + (g_year - 2000) / 4 + g_day - 1) * 24;
+	totaldayshours = ((g_year - 2000) * 365 + (g_year - 2000) / 4 + g_day -1 ) * 24;
 	// heere, accounting for years , leap years, day of the month
 
 	for (int i = 1; i < g_month; i++) // for adding months passed
 	{
-		totaldayshours += (g_months_size[g_month]) * 24;
+		totaldayshours += (g_months_size[i])*24;
 	}
 	// for small time in a day
-	totaldayshours += g_hour + (g_minute / 60) + (g_seconds / 360);
+	totaldayshours += g_hour + (g_minute / 60) + (g_seconds / 3600);
 
 	// converting to sols days
-	float totalsoldays = (totaldayshours / g_sol_day_ratio) + g_sols_from_start;
+	float totalsoldays = (totaldayshours / g_sol_day_ratio) + g_sols_from_start;   //
 
 	// converting it into sol year
 	float totalsolyear = totalsoldays / g_sols_per_year;
@@ -373,15 +375,15 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	// converting to hours of a sol
 	float totalsolhour = (totalsol - soldays) * g_sol_day_ratio;
 
-	int solhour = static_cast<int>(totalsolhour);
+	int solhour = totalsolhour;
 
 	float totalsolmin = (totalsolhour - solhour) * 60;
 
-	int solmin = static_cast<int>(totalsolmin);
+	int solmin = totalsolmin;
 
 	float totalsolsec = (totalsolmin - solmin) * 60;
 
-	int solsec = static_cast<int>(totalsolsec);
+	int solsec = static_cast<int>(totalsolsec);                           ////sec may  in float so rounded off 
 
 
 	int d_hour = solhour;// d_ to signify our d_value or final value
@@ -396,7 +398,7 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	{
 		totalsol -= d_months_size[i];
 		i++;
-	} while (totalsol > d_months_size[i]);
+	} while (totalsol > d_months_size[i] );
 
 	int d_month = i;
 	int d_year = solyear;
@@ -415,6 +417,34 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 };
 
 
+
+//get corresponding input month name
+string Gregorian_DateTime::get_input_week_name(int n)
+{
+	return g_week_days[n];
+};
+
+
+
+
+//increase by a seconds
+void Gregorian_DateTime::increase()
+{
+	g_seconds += 1;
+	g_minute += g_seconds / 60;
+	g_hour += g_minute / 60;
+	g_day += g_hour / 24;
+	g_month += g_day / g_months_size[g_month];
+	g_year += g_month / 12;
+	g_seconds = g_seconds % 60;
+	g_minute = g_minute % 60;
+	g_hour = g_hour % 24;
+	g_day = g_day % g_months_size[g_month];
+	g_month = g_month % 12;
+
+};
+
+
 //no of months
 int Gregorian_DateTime::get_no_of_months()
 {
@@ -426,4 +456,5 @@ Gregorian_DateTime::~Gregorian_DateTime()
 {
 
 };
+
 

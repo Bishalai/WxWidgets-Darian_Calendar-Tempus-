@@ -367,7 +367,7 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 
 	// sols into hour;
 
-	totalsols = totalsols * d_sol_day_ratio;
+	totalsols = totalsols * d_sol_day_ratio;                           
 
 	// into days
 	totalsols = totalsols / 24;
@@ -377,7 +377,7 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 
 	// totaldays into years
 
-	float totalyear = totaldays / 365.25;
+	float totalyear = totaldays / 365;
 
 	// int year
 	int g_year = static_cast<int>(totalyear);
@@ -391,14 +391,15 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 	if (g_year % 4 == 0 && totaldaysofyear > 60)
 	{
 
-		int i = 3;
+		int i =3;
 		do
 		{
 			totaldaysofyear -= g_months_size[i];
 			i++;
-		} while (totaldaysofyear > g_months_size[i]);
+		} 
+		while (totaldaysofyear > g_months_size[i]);
 
-		g_month = i;
+		 g_month = i;
 	}
 	else
 	{
@@ -407,14 +408,15 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 		{
 			totaldaysofyear -= g_months_size[i];
 			i++;
-		} while (totaldaysofyear > g_months_size[i]);
+		}
+		while (totaldaysofyear > g_months_size[i]);
 
-		g_month = i;
+		 g_month = i;
 	}
 
 	int g_day = static_cast<int>(totaldaysofyear);
 
-	float hour = (totaldaysofyear - g_day) * 24;
+	float hour = (totaldaysofyear - g_day)*24;
 
 	int g_hour = static_cast<int>(hour);
 
@@ -431,6 +433,29 @@ Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()
 
 	return dt_temp;
 };
+
+void Darian_Date_Time::increase()
+{
+	d_seconds += 1;
+	d_minute += d_seconds / 60;
+	d_minute += d_seconds / 60;
+	d_seconds = d_seconds % 60;
+	d_minute = d_minute % 60;
+	d_hour = d_hour % 24;
+
+};
+
+string Darian_Date_Time::get_input_month_name(int n)
+{
+	return d_months_name[n];
+};
+
+//get corresponding input month name
+string Darian_Date_Time::get_input_week_name(int n)
+{
+	return d_week_days[n];
+};
+
 
 
 int Darian_Date_Time::get_no_of_months()

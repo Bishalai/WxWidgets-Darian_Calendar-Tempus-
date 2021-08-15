@@ -6,7 +6,7 @@ using namespace std;
 class Darian_Date_Time;
 class Gregorian_DateTime;
 
-class Gregorian_DateTime
+class Gregorian_DateTime 
 {
 protected:
 	// reqired constants
@@ -39,7 +39,7 @@ protected:
 		"October",
 		"November",
 		"December"
-
+	
 	};
 
 	const string g_week_days[8] =
@@ -54,7 +54,7 @@ protected:
 		"Saturday"
 	};
 
-	const int g_months_size[13] =
+	int g_months_size[13] =
 	{
 		0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 	};
@@ -131,6 +131,13 @@ public:
 	//weekday name like sunday, monday, etc
 	string get_weekday_name();
 
+	//get corresponding input month name
+	string get_input_month_name(int n);
+
+	//get corresponding input week name
+	string get_input_week_name(int n);
+	
+
 	//returns no of days in month
 	int get_no_of_days_in_month();
 
@@ -139,7 +146,7 @@ public:
 
 
 	// return first day of the month's weekday value; sunday, mondayand so on. till 7
-	string get_firstday_month();
+	int get_firstday_month();
 
 	// other functions
 
@@ -155,7 +162,8 @@ public:
 
 	Darian_Date_Time convert_to_darian();
 
-
+	// increase by a second
+	void increase();
 
 
 	//destructor
@@ -163,4 +171,5 @@ public:
 
 
 };
+
 

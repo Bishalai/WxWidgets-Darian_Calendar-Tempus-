@@ -52,6 +52,8 @@ private:
     
 
     wxTextCtrl* secup;
+    wxTextCtrl* dateup;
+    wxTextCtrl* seasonup;
     //------------------------------------------------------------------------------------------------////
 
     ////sizers base
@@ -67,8 +69,8 @@ private:
 
     wxGridSizer* gs_g_year = new wxGridSizer(5, 3, cellsize);
     wxGridSizer* gs_d_year = new wxGridSizer(9, 3, cellsize);
-    wxGridSizer* gs_g_month = new wxGridSizer(6, 7, cellsize);
-    wxGridSizer* gs_d_month = new wxGridSizer(6, 7, cellsize);
+    wxGridSizer* gs_g_month = new wxGridSizer(8, 7, cellsize);//56 total cells
+    wxGridSizer* gs_d_month = new wxGridSizer(6, 7, cellsize);//42 total cells
 
 
 

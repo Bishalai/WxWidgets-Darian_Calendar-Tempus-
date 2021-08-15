@@ -348,6 +348,20 @@ void Darian_Date_Time::previous_month()
 };
 
 
+//--------------------------------------//
+
+//------------------next year and prev year----------------------//
+//chanegs the year value
+void Darian_Date_Time::next_year()
+{
+	set_year(d_year++);
+};
+
+void Darian_Date_Time::previous_year()
+{
+	set_year(d_year--);
+};
+
 
 // conversion function darian to gregorian
 Gregorian_DateTime Darian_Date_Time::convert_to_Gregorian()

@@ -336,6 +336,19 @@ void Gregorian_DateTime::previous_month()
 };
 
 
+//------------------next year and prev year----------------------//
+//chanegs the year value
+void Gregorian_DateTime::next_year()
+{
+	set_year(g_year++);
+};
+
+void Gregorian_DateTime::previous_year()
+{
+	set_year(g_year--);
+};
+
+
 
 // conversion functions
 
@@ -431,16 +444,16 @@ string Gregorian_DateTime::get_input_week_name(int n)
 void Gregorian_DateTime::increase()
 {
 	g_seconds += 1;
-	g_minute += g_seconds / 60;
-	g_hour += g_minute / 60;
-	g_day += g_hour / 24;
-	g_month += g_day / g_months_size[g_month];
-	g_year += g_month / 12;
-	g_seconds = g_seconds % 60;
-	g_minute = g_minute % 60;
-	g_hour = g_hour % 24;
-	g_day = g_day % g_months_size[g_month];
-	g_month = g_month % 12;
+	g_minute += (g_seconds / 60);
+	g_hour += (g_minute / 60);
+	g_day += (g_hour / 24);
+	g_month += (g_day / g_months_size[g_month]);
+	g_year += (g_month / 12);
+	g_seconds = (g_seconds % 60);
+	g_minute = (g_minute % 60);
+	g_hour = (g_hour % 24);
+	g_day = (g_day % g_months_size[g_month]);
+	g_month = (g_month % 12);
 
 };
 

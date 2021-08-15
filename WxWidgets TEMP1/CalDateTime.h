@@ -2,17 +2,13 @@
 #pragma once
 
 #include <string>
-#include "datetime.h"
+#include <wx/datetime.h>
 #include "Gregorian_DateTime.h"
 
 
 using namespace std;
 
-
-
-
 class Gregorian_DateTime;
-
 
 // class dor darian calendar
 class Darian_Date_Time 
@@ -157,6 +153,9 @@ public:
 	void next_month();
 	void previous_month();
 
+	//chanegs the year value
+	void next_year();
+	void previous_year();
 
 	// get the no of months
 	int get_no_of_months();

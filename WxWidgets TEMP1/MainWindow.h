@@ -4,9 +4,10 @@
 #include<wx/wxprec.h>
 #include<wx/timer.h>
 #include<string>
-#include"datetime.h"
+
 #include <wx/artprov.h>
-#include "datetime.h"
+
+
 #include "Georgian.xpm"
 #include "Darian.xpm"
 #include "Month.xpm"
@@ -15,8 +16,11 @@
 #include "Date.xpm"
 #include "Time.xpm"
 #include<wx/display.h>
-#include "Gregorian_DateTime.h"
 #include "CalDateTime.h"
+//#include "Gregorian_DateTime.h"
+
+
+#include"id.h"
 
 
 
@@ -24,8 +28,74 @@
 #include <wx/wx.h>
 #endif
 
+
+class Gregorian_DateTime;
+
+class Darian_Date_Time;
+
 class MainWindow : public wxFrame
 {
+private:
+
+    // defult is months view in gregorian
+    //0 of for gregorian, 1 for darian
+    bool cal_status = 0;
+    // 0 for months and 1 for year view
+    bool view_status = 0;
+
+
+    //----------------------------------------date time objects ----------------------------------------------//
+    Gregorian_DateTime g_dt_now;
+    
+
+    Darian_Date_Time d_dt_now;
+    
+
+    wxTextCtrl* secup;
+    //------------------------------------------------------------------------------------------------////
+
+    ////sizers base
+
+    wxSizer* Sizer = new wxBoxSizer(wxHORIZONTAL);
+
+
+    //side sizer
+    wxSizer* sizer_top = new wxBoxSizer(wxVERTICAL);
+
+
+    //gridsizers
+
+    wxGridSizer* gs_g_year = new wxGridSizer(5, 3, cellsize);
+    wxGridSizer* gs_d_year = new wxGridSizer(9, 3, cellsize);
+    wxGridSizer* gs_g_month = new wxGridSizer(6, 7, cellsize);
+    wxGridSizer* gs_d_month = new wxGridSizer(6, 7, cellsize);
+
+
+
+    //wxsize
+    wxDisplay win_display;
+    wxRect win_screen = win_display.GetClientArea();
+    wxSize appwinsize = wxSize(win_screen.GetWidth() / 8, win_screen.GetHeight() / 8);
+    wxSize appwinsizebot = wxSize(appwinsize.GetWidth(), appwinsize.GetHeight() / 3);
+    wxSize calsize = wxSize(appwinsize.GetWidth() / 2, appwinsize.GetHeight() / 2);
+    wxSize cellsize = wxSize(calsize.GetWidth() / 20, calsize.GetHeight() / 7);
+
+    wxSize cellmonthsize = wxSize(calsize.GetWidth() / 10, calsize.GetHeight() / 5);
+
+    //panels
+
+    wxPanel* panel_left = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+    wxPanel* panel_g_month = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+    wxPanel* panel_g_year = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+    wxPanel* panel_d_month = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+    wxPanel* panel_d_year = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
+
+
+
 public:
     MainWindow(wxWindow* parent,
         wxWindowID id,
@@ -45,6 +115,15 @@ public:
         void onsetTime(wxCommandEvent& event);
         void onswitchYear(wxCommandEvent& event);
         void onswitchMonth(wxCommandEvent& event);
+
+
+        //for display
+        void display_g_month();
+        void display_g_year();
+        void display_d_month();
+        void display_d_year();
+
+
 
         void OnTimer(wxTimerEvent& event);
         

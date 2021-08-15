@@ -4,7 +4,6 @@
 using namespace std;
 
 class Darian_Date_Time;
-class Gregorian_DateTime;
 
 class Gregorian_DateTime 
 {
@@ -156,6 +155,10 @@ public:
 	//chanegs the month value
 	void next_month();
 	void previous_month();
+
+	//chanegs the year value
+	void next_year();
+	void previous_year();
 
 
 	// conversion functions;

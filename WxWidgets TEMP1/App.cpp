@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "App.h"
-#include"id.h"
+
 #include"MainWindow.h"
 
 
@@ -19,6 +19,8 @@ bool App::OnInit()
 
 	MainWindow* main = new MainWindow(nullptr, window::id::MAINWINDOW, _("DARIAN CALENDAR"));
 	main->Show();
+	
+
 	return true;
 }
 

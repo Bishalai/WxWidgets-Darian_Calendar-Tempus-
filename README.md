@@ -2,6 +2,8 @@
 Release Version 1.0
 
 //-- Introduction-----------------------------------------------------------------------------------------------------------------------//
+
+
 This is a Calendar that shows the Gregorian(Earth) and Darian(Mars) calendar with many features written in notes section.
 
 
@@ -28,6 +30,7 @@ WxWidgets:https://www.wxwidgets.org/downloads/
 
 GitHub documentation for wxWidgets:https://github.com/wxWidgets/wxWidgets
 Link to install documentations in Git:https://github.com/wxWidgets/wxWidgets/blob/v3.1.2/docs/msw/install.md
+
 //----------------------------------------------------------------------------------------------------------------------------------------//
 
 Notes:
@@ -44,7 +47,11 @@ Contains two calendar
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------//
+
 Tempus
+
 -BishalKhand Thakuri 076bct018
+
 -Kaushal Gautam 076bct030
+
 -Aadarsh Khatri 076bct002

@@ -50,7 +50,7 @@ Contains two calendar
 
 Tempus
 
--BishalKhand Thakuri 076bct018
+-Bishal Khand Thakuri 076bct018
 
 -Kaushal Gautam 076bct030
 

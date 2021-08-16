@@ -15,12 +15,13 @@
 #include "Year.xpm"
 #include "Icon.xpm"
 //#include "Date.xpm"
-#include "Time.xpm"
+//#include "Time.xpm"
 #include<wx/display.h>
 #include "CalDateTime.h"
 //#include "Gregorian_DateTime.h"
 
-#include"setDateDialog.h"
+#include"setTimeDialog.h"
+
 #include"id.h"
 
 
@@ -116,7 +117,7 @@ public:
         void onGeorgian(wxCommandEvent& event);
         void onDarian(wxCommandEvent& event);
         void onQuit(wxCommandEvent& event);
-        void onHelp(wxCommandEvent& event);
+        void onAbout(wxCommandEvent& event);
         void onsetDate(wxCommandEvent& event);
         void onsetTime(wxCommandEvent& event);
         void onswitchYear(wxCommandEvent& event);

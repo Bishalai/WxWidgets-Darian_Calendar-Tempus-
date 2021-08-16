@@ -8,10 +8,27 @@
 #endif
 
 #include "Date.xpm"
+#include<wx/valgen.h>
+#include<wx/valnum.h>
 
 class setDateDialog :
     public wxDialog
 {
+
+private:
+
+    void onUpdateOk(wxUpdateUIEvent& event);
+
+
+    wxTextCtrl* yearBox = nullptr;
+    wxTextCtrl* monthBox = nullptr;
+    wxTextCtrl* dayBox = nullptr;
+
+   // wxChoice* monthchoice = nullptr;
+
+    int year = 2000;
+    int month = 6;
+    int day = 1;
 
 public:
 
@@ -22,46 +39,20 @@ public:
         long style = wxDEFAULT_DIALOG_STYLE,
         const wxString& name = wxASCII_STR(wxDialogNameStr));
 
-    virtual ~setDateDialog();
 
 
     int getyear() { return year; }
     int getmonth() { return month; }
     int getday() { return day; }
 
-    /*
-    int gethour() { return hour; }
-    int getminute() { return minute; }
-    int getseconds() { return seconds; }
-    */
+
 
     void setyear(int yr) { year = yr; }
     void setmonth(int mn) { month = mn; }
-    void setday(int day) { day = day; }
+    void setday(int dy) { day = dy; }
 
-    /*
-    void sethour(int hr) { hour = hr; }
-    void setminute(int min) { minute  = min; }
-    void setseconds(int sec) { seconds = sec; }
-    */
+    virtual ~setDateDialog();
 
-private:
-
-    wxTextCtrl* yearBox = nullptr;
-    wxTextCtrl* monthBox = nullptr;
-    wxTextCtrl* dayBox = nullptr;
-
-
-    int year = 2021;
-    int month = 9;
-    int day = 6;
-
-    /*
-    int hour = 0;
-    int minute = 0;
-    int seconds = 1;
-    */
-
-
+    DECLARE_EVENT_TABLE()
 };
 

@@ -64,13 +64,13 @@ MainWindow::MainWindow(wxWindow* parent,
 
     //georgian menu item
     wxBitmap GeorgianBmp(Georgian_xpm);
-    wxMenuItem* GeorgianItem = HomeMenu->Append(wxID_ANY, _("&Georgian\tCtrl+X"));
+    wxMenuItem* GeorgianItem = HomeMenu->Append(wxID_ANY, _("&Georgian"));
     GeorgianItem->SetBitmap(GeorgianBmp);
     Bind(wxEVT_MENU, &MainWindow::onGeorgian, this, GeorgianItem->GetId());
 
     //darian menu item
     wxBitmap DarianBmp(Darian_xpm);
-    wxMenuItem* DarianItem = HomeMenu->Append(wxID_ANY, _("&Darian\tCtrl+C"));
+    wxMenuItem* DarianItem = HomeMenu->Append(wxID_ANY, _("&Darian"));
     DarianItem->SetBitmap(DarianBmp);
     Bind(wxEVT_MENU, &MainWindow::onDarian, this, DarianItem->GetId());
 
@@ -88,13 +88,13 @@ MainWindow::MainWindow(wxWindow* parent,
 
     //setdate
     wxBitmap DateBmp(Date_xpm);
-    wxMenuItem* setDate = optionsMenu->Append(wxID_ANY, _("&Set Date\tCtrl+D"));
+    wxMenuItem* setDate = optionsMenu->Append(wxID_ANY, _("&Set Date"));
     setDate->SetBitmap(DateBmp);
     Bind(wxEVT_MENU, &MainWindow::onsetDate, this, setDate->GetId());
 
     //set time
     wxBitmap TimeBmp(Time_xpm);
-    wxMenuItem* setTime = optionsMenu->Append(wxID_ANY, _("&Set Time\tCtrl+T"));
+    wxMenuItem* setTime = optionsMenu->Append(wxID_ANY, _("&Set Time"));
     setTime->SetBitmap(TimeBmp);
     Bind(wxEVT_MENU, &MainWindow::onsetTime, this, setTime->GetId());
 
@@ -116,16 +116,16 @@ MainWindow::MainWindow(wxWindow* parent,
     switchToMonth->SetBitmap(MonthBmp);
     Bind(wxEVT_MENU, &MainWindow::onswitchMonth, this, switchToMonth->GetId());
 
-    optionsMenu->AppendSubMenu(viewsubMenu, _("Switch Views\tCtrl+S"));
+    optionsMenu->AppendSubMenu(viewsubMenu, _("Switch Views"));
 
     //help menu in menubar
     wxMenu* helpMenu = new wxMenu();
     menuBar->Append(helpMenu, _("&Help"));
 
     //help item
-    wxMenuItem* helpItem = helpMenu->Append(wxID_HELP);
-    helpItem->SetBitmap(wxArtProvider::GetBitmap("wxART_HELP", wxART_OTHER, wxSize(16, 16)));
-    Bind(wxEVT_MENU, &MainWindow::onHelp, this, helpItem->GetId());
+    wxMenuItem* aboutItem = helpMenu->Append(wxID_ABOUT);
+    aboutItem->SetBitmap(wxArtProvider::GetBitmap("wxART_TIP",  wxART_OTHER, wxSize(16, 16))); //, wxART_OTHER, wxSize(16, 16)
+    Bind(wxEVT_MENU, &MainWindow::onAbout, this, aboutItem->GetId());
 
     //set the Menu
     SetMenuBar(menuBar);
@@ -167,7 +167,7 @@ MainWindow::MainWindow(wxWindow* parent,
     toolBar->AddStretchableSpace();
 
     //help tool
-    toolBar->AddTool(helpItem->GetId(), _("Help"), helpItem->GetBitmap(), _("Help"));
+    toolBar->AddTool(aboutItem->GetId(), _("About"), aboutItem->GetBitmap(), _("About"));
 
     toolBar->Realize();
 
@@ -598,7 +598,9 @@ void MainWindow::OnTimer(wxTimerEvent& event)
 
 void MainWindow::onGeorgian(wxCommandEvent& event)
 {
-    if (cal_status == 1)
+    // error for now when converting from darian to gregorian
+
+   /* if (cal_status == 1)
     {
         Gregorian_DateTime g_dt_now_temp = d_dt_now.convert_to_Gregorian();
 
@@ -607,6 +609,7 @@ void MainWindow::onGeorgian(wxCommandEvent& event)
         g_dt_now.set_time(g_dt_now_temp.get_hour(), g_dt_now_temp.get_minute(), g_dt_now_temp.get_seconds());
 
     }
+    */
 
     if (view_status == 0)// if it is in month view, switch to monh view else year view
     {
@@ -978,39 +981,235 @@ void MainWindow::onNextButton(wxCommandEvent& event)
 };
 
 
-void MainWindow::onsetDate(wxCommandEvent& event)
-{
-
-    //wxMessageBox("set date");
-    
-    setDateDialog* dlg_g_date = new setDateDialog(this, wxID_ANY, _("Set Date"));
-    
-    // user must interact now
-    dlg_g_date->ShowModal();
-    
-       // wxMessageBox(wxString::Format("Date set :) '\n' Year set to: %s '\n' Month set to:%s '\n' Day set to %s '\n' ",
-         //   dlg->getyear(),dlg->getmonth(),dlg->getday()));
-    
-
-    dlg_g_date->Destroy();
-    
-    
-    PushStatusText(_("Date set"));
-    wxSleep(1);
-    PopStatusText();
-};
-
 void MainWindow::onsetTime(wxCommandEvent& event)
 {
-    wxMessageBox("Set time");
+
+    //for gregorian
+    if (cal_status == 0)
+    {
+        setTimeDialog* dlg_g_time = new setTimeDialog(this, wxID_ANY, _("Set Time"));
+
+        dlg_g_time->sethour(g_dt_now.get_hour());
+        dlg_g_time->setminute(g_dt_now.get_minute());
+        dlg_g_time->setseconds(g_dt_now.get_seconds());
+
+        dlg_g_time->ShowModal();
+
+       
+
+        dlg_g_time->Destroy();
+
+        g_dt_now.set_time(dlg_g_time->gethour(), dlg_g_time->getminute(), dlg_g_time->getseconds());
+
+        if (view_status == 0)// if it is in month view, switch to monh view else year view
+        {
+            display_g_month();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(0);
+            panel_g_month->Show(1);
+            panel_g_year->Show(0);
+        }
+        else
+        {
+            display_g_year();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(0);
+            panel_g_month->Show(0);
+            panel_g_year->Show(1);
+        }
+        // to update the name of the date and season
+        /*wxString g_date_year = wxString::Format(wxT("%i"), g_dt_now.get_year());
+        wxString g_date_month = wxString::Format(wxT("%s"), g_dt_now.get_month_name());
+        wxString g_date_day = wxString::Format(wxT("%i"), g_dt_now.get_day());
+        wxString g_date_temp = g_date_day + " " + g_date_month + " " + g_date_year;
+        dateup->ChangeValue(g_date_temp);
+
+        seasonup->ChangeValue(g_dt_now.get_season_name());
+        */
+        MainWindow::Refresh();
+        MainWindow::Update();
+
+        Sizer->Layout();
+    }
+    else
+    {
+        setTimeDialog* dlg_d_time = new setTimeDialog(this, wxID_ANY, _("Set Time"));
+
+        dlg_d_time->sethour(d_dt_now.get_hour());
+        dlg_d_time->setminute(d_dt_now.get_minute());
+        dlg_d_time->setseconds(d_dt_now.get_seconds());
+
+        dlg_d_time->ShowModal();
+
+
+
+        dlg_d_time->Destroy();
+
+        d_dt_now.set_time(dlg_d_time->gethour(), dlg_d_time->getminute(), dlg_d_time->getseconds());
+
+
+        if (view_status == 0)//if it is in month view when switching use month view else year view
+        {
+            display_d_month();
+
+            panel_d_month->Show(1);
+            panel_d_year->Show(0);
+            panel_g_month->Show(0);
+            panel_g_year->Show(0);
+        }
+        else
+        {
+            display_d_year();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(1);
+            panel_g_month->Show(0);
+            panel_g_year->Show(0);
+        }
+
+        // update the date and season
+        /*wxString d_date_year = wxString::Format(wxT("%i"), d_dt_now.get_year());
+        wxString d_date_month = wxString::Format(wxT("%s"), d_dt_now.get_month_name());
+        wxString d_date_sol = wxString::Format(wxT("%i"), d_dt_now.get_sol());
+        wxString d_date_temp = d_date_sol + " " + d_date_month + " " + d_date_year;
+
+        dateup->ChangeValue(d_date_temp);
+
+        seasonup->ChangeValue(d_dt_now.get_season_name());
+        */
+
+        MainWindow::Refresh();
+        MainWindow::Update();
+
+        Sizer->Layout();
+
+    }
+    
     PushStatusText(_("Time set"));
     wxSleep(1);
     PopStatusText();
 };
 
-void MainWindow::onHelp(wxCommandEvent& event)
+void MainWindow::onsetDate(wxCommandEvent& event)
 {
-    wxMessageBox("Help Menu");
+
+
+    //for gregorian
+    if (cal_status == 0)
+    {
+        setDateDialog* dlg_g_date = new setDateDialog(this, wxID_ANY, _("Set Date"));
+
+        dlg_g_date->setyear(g_dt_now.get_year());
+        dlg_g_date->setmonth(g_dt_now.get_month());
+        dlg_g_date->setday(g_dt_now.get_day());
+
+        dlg_g_date->ShowModal();
+
+
+
+        dlg_g_date->Destroy();
+
+        g_dt_now.set_date(dlg_g_date->getyear(), dlg_g_date->getmonth(), dlg_g_date->getday());
+
+        if (view_status == 0)// if it is in month view, switch to monh view else year view
+        {
+            display_g_month();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(0);
+            panel_g_month->Show(1);
+            panel_g_year->Show(0);
+        }
+        else
+        {
+            display_g_year();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(0);
+            panel_g_month->Show(0);
+            panel_g_year->Show(1);
+        }
+        // to update the name of the date and season
+        wxString g_date_year = wxString::Format(wxT("%i"), g_dt_now.get_year());
+        wxString g_date_month = wxString::Format(wxT("%s"), g_dt_now.get_month_name());
+        wxString g_date_day = wxString::Format(wxT("%i"), g_dt_now.get_day());
+        wxString g_date_temp = g_date_day + " " + g_date_month + " " + g_date_year;
+        dateup->ChangeValue(g_date_temp);
+
+        seasonup->ChangeValue(g_dt_now.get_season_name());
+
+        MainWindow::Refresh();
+        MainWindow::Update();
+
+        Sizer->Layout();
+    }
+    else
+    {
+        setDateDialog* dlg_d_date = new setDateDialog(this, wxID_ANY, _("Set Date"));
+
+        dlg_d_date->setyear(d_dt_now.get_year());
+        dlg_d_date->setmonth(d_dt_now.get_month());
+        dlg_d_date->setday(d_dt_now.get_sol());
+
+        dlg_d_date->ShowModal();
+
+        d_dt_now.set_date(dlg_d_date->getyear(), dlg_d_date->getmonth(), dlg_d_date->getday());
+
+        dlg_d_date->Destroy();
+
+        if (view_status == 0)//if it is in month view when switching use month view else year view
+        {
+            display_d_month();
+
+            panel_d_month->Show(1);
+            panel_d_year->Show(0);
+            panel_g_month->Show(0);
+            panel_g_year->Show(0);
+        }
+        else
+        {
+            display_d_year();
+
+            panel_d_month->Show(0);
+            panel_d_year->Show(1);
+            panel_g_month->Show(0);
+            panel_g_year->Show(0);
+        }
+
+        // update the date and season
+        wxString d_date_year = wxString::Format(wxT("%i"), d_dt_now.get_year());
+        wxString d_date_month = wxString::Format(wxT("%s"), d_dt_now.get_month_name());
+        wxString d_date_sol = wxString::Format(wxT("%i"), d_dt_now.get_sol());
+        wxString d_date_temp = d_date_sol + " " + d_date_month + " " + d_date_year;
+
+        dateup->ChangeValue(d_date_temp);
+
+        seasonup->ChangeValue(d_dt_now.get_season_name());
+
+
+        MainWindow::Refresh();
+        MainWindow::Update();
+
+        Sizer->Layout();
+
+    }
+
+
+
+    //wxMessageBox("Set time");
+    PushStatusText(_("Date set"));
+    wxSleep(1);
+    PopStatusText();
+};
+
+void MainWindow::onAbout(wxCommandEvent& event)
+{
+    wxMessageBox("About Section");
+
+
+
 
 };
 

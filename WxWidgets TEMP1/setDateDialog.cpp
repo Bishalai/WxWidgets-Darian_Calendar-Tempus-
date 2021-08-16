@@ -1,7 +1,11 @@
-
-
-
 #include "setDateDialog.h"
+
+
+BEGIN_EVENT_TABLE(setDateDialog, wxDialog)
+
+EVT_UPDATE_UI(wxID_OK,setDateDialog::onUpdateOk )
+
+END_EVENT_TABLE()
 
 
 setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
@@ -31,18 +35,19 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
 
     wxBoxSizer* yearsizer = new wxBoxSizer(wxHORIZONTAL);
 
-    // year label
     wxStaticText* yearlabel = new wxStaticText(this, wxID_ANY, _("Year:"));
     yearlabel->SetMinSize(wxSize(50, yearlabel->GetMinSize().y));
     yearsizer->Add(yearlabel);
 
 
     yearBox = new wxTextCtrl(this, wxID_ANY);
+    yearBox->SetValidator(wxIntegerValidator<int>(&year));
+
     yearsizer->Add(yearBox, 1);
 
     mainSizer->Add(yearsizer, 0, wxEXPAND | wxALL, 5);
     
-    //for month label
+    //for month field
 
     wxBoxSizer* monthsizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -50,14 +55,18 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
     monthlabel->SetMinSize(wxSize(50, monthlabel->GetMinSize().y));
     monthsizer->Add(monthlabel);
 
-
     monthBox = new wxTextCtrl(this, wxID_ANY);
+    monthBox->SetValidator(wxIntegerValidator<int>(&month));
+
+   
+
     monthsizer->Add(monthBox, 1);
 
-    mainSizer->Add(monthsizer, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+     mainSizer->Add(monthsizer, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
 
 
-    //fo day labels
+
+    //fo day field
 
     wxBoxSizer* daysizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -67,6 +76,9 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
 
 
     dayBox = new wxTextCtrl(this, wxID_ANY);
+    
+    dayBox->SetValidator(wxIntegerValidator<int>(&day));
+    
     daysizer->Add(dayBox, 1);
 
     mainSizer->Add(daysizer, 0, wxEXPAND | wxALL, 5);
@@ -96,9 +108,29 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
 
     Fit();
 
+
     
 }
 
+
+void setDateDialog::onUpdateOk(wxUpdateUIEvent& event)
+{
+    event.Enable(false);
+
+    if (!yearBox->GetValue().empty())
+    {
+        if (!dayBox->GetValue().empty())
+        {
+            
+            if (!monthBox->GetValue().empty())
+            {
+                event.Enable(true);
+            }
+            
+           
+        }
+    }
+};
 
 
 setDateDialog::~setDateDialog()

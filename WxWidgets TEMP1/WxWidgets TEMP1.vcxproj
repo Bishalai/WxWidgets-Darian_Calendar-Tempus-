@@ -150,6 +150,7 @@
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Gregorian_DateTime.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="quotes.cpp" />
     <ClCompile Include="setDateDialog.cpp" />
     <ClCompile Include="setTimeDialog.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="Gregorian_DateTime.h" />
     <ClInclude Include="id.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="quotes.h" />
     <ClInclude Include="setDateDialog.h" />
     <ClInclude Include="setTimeDialog.h" />
   </ItemGroup>

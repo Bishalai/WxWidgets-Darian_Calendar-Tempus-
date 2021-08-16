@@ -4,7 +4,7 @@
 
 -----------------wxTEMP1 for the first template for the darian calendar-------------------------------------
 
---Done By Bishal Khand Thakuri AKA IchigoIchie and the group Tempus
+--Done By Bishal Khand Thakuri AKA IchigoIchie and the group Tempus- AADARSH - BISHAL - KAUSHAL
 
 //-------------------------------------------------------------------------------------------------------//
 
@@ -45,7 +45,6 @@ MainWindow::MainWindow(wxWindow* parent,
 
     //--set date, time to now===================//
     g_dt_now.set_now();
-    //dt_now->set_date(2021, 10, 2);
 
     d_dt_now.set_now();
     //-----------------------------------------------//
@@ -195,9 +194,12 @@ MainWindow::MainWindow(wxWindow* parent,
     wxButton* nextButton = new wxButton(panel_right, wxID_ANY, " Next ", wxPoint(0, 0), wxDefaultSize);
     nextButton->Bind(wxEVT_BUTTON, &MainWindow::onNextButton, this);
 
-    //wxBitmap bitmap;
-    //bitmap.LoadFile("‪D:\Photos\Messenger\123.jpeg", wxBITMAP_TYPE_JPEG);                                        //  //bitmapbutton didnt load :/
-    //wxBitmapButton* button12 = new wxBitmapButton(panel_left, -1, bitmap, wxPoint(0, 0), wxSize(50, 50), 0);
+   //
+
+    //adding quotes box
+
+
+
 
 
 
@@ -260,29 +262,7 @@ MainWindow::MainWindow(wxWindow* parent,
     //--------------------------------------------------------------------------------------------------------------/
     //-------------------------------------------------------------------------------------------------------------//
 
-    /*
-    wxPanel* panel_rightbottom = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
-    panel_rightbottom->SetBackgroundColour(wxColor(150, 100, 100));
-    wxButton* bottonarightbottom = new wxButton(panel_rightbottom, wxID_ANY, "to do list (opt)", wxPoint(40, 0), wxDefaultSize);
-
-    wxPanel* panel_topright = new wxPanel(this, wxID_ANY, wxDefaultPosition, appwinsize, wxTAB_TRAVERSAL, _("Top"));
-    panel_topright->SetBackgroundColour(wxColor(100, 150, 100));
-    wxButton* toprightbottom1 = new wxButton(panel_topright, wxID_ANY, " Next ", wxPoint(0, 0), wxDefaultSize);
-
-    //bitmapbutton didnt load :/
-
-    wxStaticText* calander_checkbox = new wxStaticText(panel_topright, wxID_ANY, "calander", wxPoint(20, 40));
-    wxCheckBox* checkbox1 = new wxCheckBox(panel_topright, wxID_ANY, wxT("Georgian"), wxPoint(20, 60), wxDefaultSize);
-    checkbox1->SetValue(true);
-    wxCheckBox* checkbox2 = new wxCheckBox(panel_topright, wxID_ANY, wxT("Darian"), wxPoint(20, 80), wxDefaultSize);
-    checkbox2->SetValue(false);
-
-    wxStaticText* view_checkbox = new wxStaticText(panel_topright, wxID_ANY, "view", wxPoint(20, 100));
-    wxCheckBox* checkbox3 = new wxCheckBox(panel_topright, wxID_ANY, wxT("month"), wxPoint(20, 120), wxDefaultSize);
-    checkbox3->SetValue(true);
-    wxCheckBox* checkbox4 = new wxCheckBox(panel_topright, wxID_ANY, wxT("year"), wxPoint(20, 140), wxDefaultSize);
-    checkbox4->SetValue(false);
-    */
+    
     Sizer->Add(panel_left, 0, wxEXPAND );
     
     Sizer->Add(panel_g_month, 2, wxEXPAND );
@@ -1019,15 +999,7 @@ void MainWindow::onsetTime(wxCommandEvent& event)
             panel_g_month->Show(0);
             panel_g_year->Show(1);
         }
-        // to update the name of the date and season
-        /*wxString g_date_year = wxString::Format(wxT("%i"), g_dt_now.get_year());
-        wxString g_date_month = wxString::Format(wxT("%s"), g_dt_now.get_month_name());
-        wxString g_date_day = wxString::Format(wxT("%i"), g_dt_now.get_day());
-        wxString g_date_temp = g_date_day + " " + g_date_month + " " + g_date_year;
-        dateup->ChangeValue(g_date_temp);
-
-        seasonup->ChangeValue(g_dt_now.get_season_name());
-        */
+        
         MainWindow::Refresh();
         MainWindow::Update();
 
@@ -1069,16 +1041,8 @@ void MainWindow::onsetTime(wxCommandEvent& event)
             panel_g_year->Show(0);
         }
 
-        // update the date and season
-        /*wxString d_date_year = wxString::Format(wxT("%i"), d_dt_now.get_year());
-        wxString d_date_month = wxString::Format(wxT("%s"), d_dt_now.get_month_name());
-        wxString d_date_sol = wxString::Format(wxT("%i"), d_dt_now.get_sol());
-        wxString d_date_temp = d_date_sol + " " + d_date_month + " " + d_date_year;
 
-        dateup->ChangeValue(d_date_temp);
-
-        seasonup->ChangeValue(d_dt_now.get_season_name());
-        */
+        
 
         MainWindow::Refresh();
         MainWindow::Update();
@@ -1206,12 +1170,11 @@ void MainWindow::onsetDate(wxCommandEvent& event)
 
 void MainWindow::onAbout(wxCommandEvent& event)
 {
-    wxMessageBox("About Section");
-
-
+    wxMessageBox("About Section\n-- Darian Calendar \n------A calendar made with the concept of Darian Calendar, a Calendar proposed for Mars\n  ---- Integrated with the familiar Gregorian Calendar\n \n ---Made by Tempus---\n-Bishal076bct018 \n-Kaushal076bct030 \n-Aadarsh076bct002");
 
 
 };
+
 
 
 void MainWindow::onQuit(wxCommandEvent& event)

@@ -4,7 +4,6 @@
 
 #include<wx/wxprec.h>
 #include<wx/timer.h>
-#include<string>
 
 #include <wx/artprov.h>
 
@@ -19,6 +18,8 @@
 #include<wx/display.h>
 #include "CalDateTime.h"
 //#include "Gregorian_DateTime.h"
+
+#include"quotes.h"
 
 #include"setTimeDialog.h"
 

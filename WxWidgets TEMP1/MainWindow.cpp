@@ -584,6 +584,16 @@ void MainWindow::OnTimer(wxTimerEvent& event)
 
 void MainWindow::onGeorgian(wxCommandEvent& event)
 {
+    if (cal_status == 1)
+    {
+        Gregorian_DateTime g_dt_now_temp = d_dt_now.convert_to_Gregorian();
+
+        g_dt_now.set_date(g_dt_now_temp.get_year(), g_dt_now_temp.get_month(), g_dt_now_temp.get_day());
+
+        g_dt_now.set_time(g_dt_now_temp.get_hour(), g_dt_now_temp.get_minute(), g_dt_now_temp.get_seconds());
+
+    }
+
     if (view_status == 0)// if it is in month view, switch to monh view else year view
     {
         display_g_month();
@@ -630,6 +640,17 @@ void MainWindow::onGeorgian(wxCommandEvent& event)
 
 void MainWindow::onDarian(wxCommandEvent& event)
 {
+    if (cal_status == 0)
+    {
+        Darian_Date_Time d_dt_now_temp = g_dt_now.convert_to_darian();
+
+        d_dt_now.set_date(d_dt_now_temp.get_year(), d_dt_now_temp.get_month(), d_dt_now_temp.get_sol());
+
+        d_dt_now.set_time(d_dt_now_temp.get_hour(), d_dt_now_temp.get_minute(), d_dt_now_temp.get_seconds());
+
+    }
+
+
     if (view_status == 0)//if it is in month view when switching use month view else year view
     {
         display_d_month();

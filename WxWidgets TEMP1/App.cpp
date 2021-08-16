@@ -1,10 +1,24 @@
+/*
+
+//---------------------------------------------------------------------------------------------------//
+
+-----------------wxTEMP1 for the first template for the darian calendar-------------------------------------
+
+--Done By Bishal Khand Thakuri AKA IchigoIchie and the group Tempus
+
+//-------------------------------------------------------------------------------------------------------//
+
+*/
+
+#pragma once
+
 #define _CRT_SECURE_NO_WARNINGS
 #include "App.h"
 
 #include"MainWindow.h"
 
 
-IMPLEMENT_APP(App); //Main
+
 
 App::App()
 {
@@ -23,6 +37,8 @@ bool App::OnInit()
 
 	return true;
 }
+
+IMPLEMENT_APP(App); //Main
 
 App::~App()
 {

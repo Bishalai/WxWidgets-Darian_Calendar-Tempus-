@@ -150,6 +150,7 @@
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Gregorian_DateTime.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="setDateDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Gregorian_DateTime.h" />
     <ClInclude Include="id.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="setDateDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

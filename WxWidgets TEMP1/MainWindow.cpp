@@ -1,4 +1,18 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿/*
+
+//---------------------------------------------------------------------------------------------------//
+
+-----------------wxTEMP1 for the first template for the darian calendar-------------------------------------
+
+--Done By Bishal Khand Thakuri AKA IchigoIchie and the group Tempus
+
+//-------------------------------------------------------------------------------------------------------//
+
+*/
+
+#pragma once
+
+#define _CRT_SECURE_NO_WARNINGS
 // main window od the app
 #include "MainWindow.h"
 
@@ -175,7 +189,7 @@ MainWindow::MainWindow(wxWindow* parent,
     panel_right->SetBackgroundColour(wxColor(200, 150, 100));
 
 
-    wxButton* prevButton = new wxButton(panel_left, wxID_ANY, "Prev", wxPoint(appwinsize.GetWidth() - 60, 0), wxDefaultSize);
+    wxButton* prevButton = new wxButton(panel_left, wxID_ANY, "Prev", wxPoint(appwinsize.GetWidth() - 75, 0), wxDefaultSize);
     prevButton->Bind(wxEVT_BUTTON, &MainWindow::onPrevButton, this);
 
     wxButton* nextButton = new wxButton(panel_right, wxID_ANY, " Next ", wxPoint(0, 0), wxDefaultSize);
@@ -630,9 +644,9 @@ void MainWindow::onGeorgian(wxCommandEvent& event)
 
     //wxMessageBox("set to Georgian Calendar");
 
-    PushStatusText(_("Set to Gregorian Calendar"));
-    wxSleep(1);
-    PopStatusText();
+   // PushStatusText(_("Set to Gregorian Calendar"));
+   // wxSleep(1);
+   // PopStatusText();
 };
 
 
@@ -690,9 +704,9 @@ void MainWindow::onDarian(wxCommandEvent& event)
 
 
     //wxMessageBox("set to Darian Calendar");
-    PushStatusText(_("Set to Darian Calendar"));
-    wxSleep(1);
-    PopStatusText();
+   // PushStatusText(_("Set to Darian Calendar"));
+   // wxSleep(1);
+   // PopStatusText();
 };
 
 
@@ -725,9 +739,9 @@ void MainWindow::onswitchYear(wxCommandEvent& event)
     view_status = 1; // current view status changed to year
 
     //wxMessageBox("Year View");
-    PushStatusText(_("Year View Set"));
-    wxSleep(1);
-    PopStatusText();
+  //  PushStatusText(_("Year View Set"));
+    //wxSleep(1);
+   // PopStatusText();
 };
 
 void MainWindow::onswitchMonth(wxCommandEvent& event)
@@ -760,10 +774,10 @@ void MainWindow::onswitchMonth(wxCommandEvent& event)
     view_status = 0;//view status updated to month
 
     //wxMessageBox("Month View");
-    PushStatusText(_("Month View Set"));
-    wxSleep(1);
+    //PushStatusText(_("Month View Set"));
+    //wxSleep(1);
 
-    PopStatusText();
+//    PopStatusText();
 };
 
 
@@ -863,10 +877,10 @@ void MainWindow::onPrevButton(wxCommandEvent& event)
 
     //wxMessageBox(_("prevbutton called"));
 
-    PushStatusText(_("Previous Button Clicked!"));
-    wxSleep(1);
+    //PushStatusText(_("Previous Button Clicked!"));
+    //wxSleep(1);
 
-    PopStatusText();
+    //PopStatusText();
 
 
 };
@@ -956,26 +970,40 @@ void MainWindow::onNextButton(wxCommandEvent& event)
 
     //wxMessageBox(_("nextbutton called"));
 
-    PushStatusText(_("Next Button Clicked!"));
-    wxSleep(1);
+   // PushStatusText(_("Next Button Clicked!"));
+  //  wxSleep(1);
 
-    PopStatusText();
+//    PopStatusText();
 
 };
 
 
 void MainWindow::onsetDate(wxCommandEvent& event)
 {
-    wxMessageBox("set date");
-    PushStatusText(_("date set"));
+
+    //wxMessageBox("set date");
+    
+    setDateDialog* dlg_g_date = new setDateDialog(this, wxID_ANY, _("Set Date"));
+    
+    // user must interact now
+    dlg_g_date->ShowModal();
+    
+       // wxMessageBox(wxString::Format("Date set :) '\n' Year set to: %s '\n' Month set to:%s '\n' Day set to %s '\n' ",
+         //   dlg->getyear(),dlg->getmonth(),dlg->getday()));
+    
+
+    dlg_g_date->Destroy();
+    
+    
+    PushStatusText(_("Date set"));
     wxSleep(1);
     PopStatusText();
 };
 
 void MainWindow::onsetTime(wxCommandEvent& event)
 {
-    wxMessageBox("set time");
-    PushStatusText(_("time set"));
+    wxMessageBox("Set time");
+    PushStatusText(_("Time set"));
     wxSleep(1);
     PopStatusText();
 };

@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #pragma once
 
@@ -13,13 +14,13 @@
 #include "Month.xpm"
 #include "Year.xpm"
 #include "Icon.xpm"
-#include "Date.xpm"
+//#include "Date.xpm"
 #include "Time.xpm"
 #include<wx/display.h>
 #include "CalDateTime.h"
 //#include "Gregorian_DateTime.h"
 
-
+#include"setDateDialog.h"
 #include"id.h"
 
 

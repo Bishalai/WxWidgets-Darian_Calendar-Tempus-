@@ -318,7 +318,7 @@ bool Darian_Date_Time::check_leap_year()
 void Darian_Date_Time::next_month()
 {
 	int d_month_next = d_month + 1;
-	if (d_month_next > 24)
+	if (d_month_next == 25)
 	{
 		set_year(d_year + 1);
 		set_month(1);
@@ -326,7 +326,8 @@ void Darian_Date_Time::next_month()
 	}
 	else
 	{
-		set_month(d_month + 1);
+		set_year(d_year);
+		set_month(d_month_next);
 		set_sol(d_sol);
 	}
 
@@ -334,7 +335,7 @@ void Darian_Date_Time::next_month()
 void Darian_Date_Time::previous_month()
 {
 	int d_month_prev = d_month - 1;
-	if (d_month_prev < 1)
+	if (d_month_prev ==0)
 	{
 		set_year(d_year - 1);
 		set_month(24);
@@ -342,7 +343,8 @@ void Darian_Date_Time::previous_month()
 	}
 	else
 	{
-		set_month(d_month - 1);
+		set_year(d_year);
+		set_month(d_month_prev);
 		set_sol(d_sol);
 	}
 };
@@ -354,12 +356,14 @@ void Darian_Date_Time::previous_month()
 //chanegs the year value
 void Darian_Date_Time::next_year()
 {
-	set_year(d_year++);
+	int d_year_temp = d_year + 1;
+	set_year(d_year_temp);
 };
 
 void Darian_Date_Time::previous_year()
 {
-	set_year(d_year--);
+	int d_year_temp = d_year - 1;
+	set_year(d_year_temp);
 };
 
 

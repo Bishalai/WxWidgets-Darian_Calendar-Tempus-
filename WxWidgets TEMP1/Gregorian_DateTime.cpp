@@ -62,7 +62,7 @@ void Gregorian_DateTime::set_month(int m)
 	}
 	else if (m > 12)
 	{
-		g_month = 24;
+		g_month = 12;
 	}
 	else
 	{
@@ -305,15 +305,16 @@ bool Gregorian_DateTime::check_leap_year()
 void Gregorian_DateTime::next_month()
 {
 	int g_month_next = g_month + 1;
-	if (g_month_next > 12)
+	if (g_month_next == 13)
 	{
-		set_year(g_year + 1);
+		set_year(g_year);
 		set_month(1);
 		set_day(g_day);
 	}
 	else
 	{
-		set_month(g_month + 1);
+		set_year(g_year);
+		set_month(g_month_next);
 		set_day(g_day);
 	}
 };
@@ -322,15 +323,16 @@ void Gregorian_DateTime::next_month()
 void Gregorian_DateTime::previous_month()
 {
 	int g_month_prev = g_month - 1;
-	if (g_month_prev < 1)
+	if (g_month_prev == 0)
 	{
-		set_year(g_year - 1);
+		set_year(g_year);
 		set_month(12);
 		set_day(g_day);
 	}
 	else
 	{
-		set_month(g_month - 1);
+		set_year(g_year);
+		set_month(g_month_prev);
 		set_day(g_day);
 	}
 };
@@ -340,12 +342,14 @@ void Gregorian_DateTime::previous_month()
 //chanegs the year value
 void Gregorian_DateTime::next_year()
 {
-	set_year(g_year++);
+	int g_year_temp = g_year + 1;
+	set_year(g_year_temp);
 };
 
 void Gregorian_DateTime::previous_year()
 {
-	set_year(g_year--);
+	int g_year_temp = g_year - 1;
+	set_year(g_year_temp);
 };
 
 

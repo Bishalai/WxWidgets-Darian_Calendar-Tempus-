@@ -14,15 +14,16 @@ string quotes::get_quote(int n)
     int entry = 1;
     if (n < 0)
     {
-        entry = 1;
+        return quotations[1];
     }
     else if (n > 38)
     {
-        entry = 38;
+        return quotations[38];
     }
-
-    return quotations[n];
-
+    else
+    {
+        return quotations[n];
+    }
 
 
 };

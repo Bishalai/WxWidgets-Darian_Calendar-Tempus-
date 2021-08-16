@@ -51,8 +51,45 @@ private:
 
 		"Mars is there, waiting to be reached\n- Buzz Aldrin",
 
+		"Don't judge each day by the harvest you reap but by the seeds that you plant.\n -Robert Louis Stevenson",
 
+		"The future belongs to those who believe in the beauty of their dreams. \n-Eleanor Roosevelt",
 
+		"The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart. \n-Helen Keller",
+
+		"Many of life's failures are people who did not realize how close they were to success when they gave up. \n-Thomas A. Edison",
+
+		"Keep smiling, because life is a beautiful thing and there's so much to smile about. \n-Marilyn Monroe",
+
+		"Life is a long lesson in humility. \n-James M. Barrie",
+
+		"In three words I can sum up everything I've learned about life: it goes on. \n-Robert Frost",
+
+		"Love the life you live. Live the life you love. \n-Bob Marley",
+
+		"Life is either a daring adventure or nothing at all. \n-Helen Keller",
+
+		"You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose. \n-Dr. Seuss",
+
+		"Life is made of ever so many partings welded together. \n-Charles Dickens",
+
+		"Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma — which is living with the results of other people's thinking. \n-Steve Jobs",
+
+		"Life is trying things to see if they work. \n-Ray Bradbury",
+
+		"You miss 100% of the shots you don't take. \n-Wayne Gretzky",
+
+		"Whether you think you can or you think you can't, you're right. \n-Henry Ford",
+
+		"I alone cannot change the world, but I can cast a stone across the water to create many ripples. \n-Mother Teresa",
+
+		"Nothing is impossible, the word itself says, ‘I'm possible!' \n-Audrey Hepburn",
+
+		//37 for greg year
+		"The question isn't who is going to let me; it's who is going to stop me. \n-Ayn Rand",
+
+		//38 for darian year
+		"The only person you are destined to become is the person you decide to be. \n-Ralph Waldo Emerson"
 
 	}
 		;

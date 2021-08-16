@@ -405,6 +405,8 @@ void MainWindow::display_g_year()
 
     panel_g_year->SetBackgroundColour(wxColor(100, 150, 100));
 
+    wxString quote_str = wxString::Format(wxT("%s"), quote.get_quote(37));
+    quotesup->ChangeValue(quote_str);
 
     // clearing gs
     gs_g_year->Clear(1);
@@ -446,6 +448,10 @@ void MainWindow::display_d_month()
 
     //--------------------------------month vew darian-----------------------------------------//
 
+
+     //update the quote
+    wxString quote_str = wxString::Format(wxT("%s"), quote.get_quote(d_dt_now.get_month()+12));
+    quotesup->ChangeValue(quote_str);
 
     panel_d_month->SetBackgroundColour(wxColor(100, 100, 150));
     //clearing the gridsizer
@@ -509,6 +515,9 @@ void MainWindow::display_d_month()
 
 void MainWindow::display_d_year()
 { //---------------------------year view for darian-----------------------------------//
+
+    wxString quote_str = wxString::Format(wxT("%s"), quote.get_quote(38));
+    quotesup->ChangeValue(quote_str);
 
     panel_d_year->SetBackgroundColour(wxColor(100, 150, 100));
 

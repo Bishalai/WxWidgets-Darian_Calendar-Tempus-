@@ -53,7 +53,11 @@ private:
 
     Darian_Date_Time d_dt_now;
     
-
+    //quotes
+    quotes quote;
+    wxTextCtrl* quotesup;
+    
+    //for time +date update
     wxTextCtrl* secup;
     wxTextCtrl* dateup;
     wxTextCtrl* seasonup;

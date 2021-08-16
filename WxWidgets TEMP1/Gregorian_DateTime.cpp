@@ -307,14 +307,15 @@ void Gregorian_DateTime::next_month()
 	int g_month_next = g_month + 1;
 	if (g_month_next == 13)
 	{
-		set_year(g_year);
-		set_month(1);
+		int year = g_year + 1;
+		g_year = year;
+		g_month = 1;
 		set_day(g_day);
 	}
 	else
 	{
-		set_year(g_year);
-		set_month(g_month_next);
+		
+		g_month = g_month_next;
 		set_day(g_day);
 	}
 };
@@ -325,14 +326,14 @@ void Gregorian_DateTime::previous_month()
 	int g_month_prev = g_month - 1;
 	if (g_month_prev == 0)
 	{
-		set_year(g_year);
-		set_month(12);
+		int year = g_year - 1;
+		g_year = year;
+		g_month = 12;
 		set_day(g_day);
 	}
 	else
 	{
-		set_year(g_year);
-		set_month(g_month_prev);
+		g_month = g_month_prev;
 		set_day(g_day);
 	}
 };
@@ -452,7 +453,14 @@ void Gregorian_DateTime::increase()
 	g_hour += (g_minute / 60);
 	g_day += (g_hour / 24);
 
-	if (g_month<=12)
+	int day_temp = g_day;
+
+	g_seconds = (g_seconds % 60);
+	g_minute = (g_minute % 60);
+	g_hour = (g_hour % 24);
+
+	set_day(day_temp);
+	/*if (g_month <= 12)
 	{
 		g_month += (g_day / g_months_size[g_month]);
 	}
@@ -461,9 +469,6 @@ void Gregorian_DateTime::increase()
 		g_month += (g_day / g_months_size[1]);
 	}
 	g_year += (g_month / 12);
-	g_seconds = (g_seconds % 60);
-	g_minute = (g_minute % 60);
-	g_hour = (g_hour % 24);
 	if (g_month!=12)
 	{
 		g_month = (g_month % 12);
@@ -473,7 +478,7 @@ void Gregorian_DateTime::increase()
 		g_month = 12;
 	}
 	g_day = (g_day % g_months_size[g_month]);
-	
+	*/
 
 };
 

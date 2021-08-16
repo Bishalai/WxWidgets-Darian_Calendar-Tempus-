@@ -39,9 +39,9 @@ MainWindow::MainWindow(wxWindow* parent,
 {
     SetIcon(Icon_xpm);
 
-    SetMinSize(wxSize(700,500));
+    //SetMinSize(wxSize(700,500));
 
-    SetMaxSize(wxSize(1000, 700));
+    SetMaxSize(wxSize(1000, 500));
 
     //--set date, time to now===================//
     g_dt_now.set_now();
@@ -198,7 +198,10 @@ MainWindow::MainWindow(wxWindow* parent,
 
     //adding quotes box
 
+    wxString quote_str = wxString::Format(wxT("%s"), quote.get_quote(g_dt_now.get_month()));
 
+    wxTextCtrl* quotes = new wxTextCtrl(panel_right, -1,quote_str , wxPoint(10,40), wxSize(150,150), style = wxTE_MULTILINE | wxTE_READONLY);
+    quotesup = quotes;
 
 
 
@@ -265,10 +268,10 @@ MainWindow::MainWindow(wxWindow* parent,
     
     Sizer->Add(panel_left, 0, wxEXPAND );
     
-    Sizer->Add(panel_g_month, 2, wxEXPAND );
-    Sizer->Add(panel_g_year, 2, wxEXPAND );
-    Sizer->Add(panel_d_month, 2, wxEXPAND);
-    Sizer->Add(panel_d_year, 2, wxEXPAND );
+    Sizer->Add(panel_g_month, 1, wxEXPAND );
+    Sizer->Add(panel_g_year, 1, wxEXPAND );
+    Sizer->Add(panel_d_month, 1, wxEXPAND);
+    Sizer->Add(panel_d_year, 1, wxEXPAND );
     
     display_g_month();
     
@@ -326,6 +329,12 @@ void MainWindow::display_g_month()
     //------------------------------ month  view-----------------------------------------------///
    
     panel_g_month->SetBackgroundColour(wxColor(100, 100, 150));
+   
+    //update the quote
+    wxString quote_str = wxString::Format(wxT("%s"), quote.get_quote(g_dt_now.get_month()));
+    quotesup->ChangeValue(quote_str);
+
+
     //clearing the gridsizer
     gs_g_month->Clear(1);
 

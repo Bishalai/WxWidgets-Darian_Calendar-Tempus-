@@ -373,7 +373,7 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 		totaldayshours += (g_months_size[g_month])*24;
 	}
 	// for small time in a day
-	totaldayshours += g_hour + (g_minute / 60) + (g_seconds / 360);
+	totaldayshours += g_hour + (g_minute / 60) + (g_seconds / 3600);
 
 	// converting to sols days
 	float totalsoldays = (totaldayshours / g_sol_day_ratio) + g_sols_from_start;
@@ -385,10 +385,10 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	int solyear = static_cast<int>(totalsolyear);
 
 	// converting it into sols
-	float totalsol = (totalsolyear - solyear) * 668.6;
+	float totalsol = (totalsolyear - solyear) * g_sols_per_year;
 
 	// converting to int
-	int soldays = static_cast<int>(totalsoldays);
+	int soldays = static_cast<int>(totalsol);
 
 	// converting to hours of a sol
 	float totalsolhour = (totalsol - soldays) * g_sol_day_ratio;
@@ -409,7 +409,7 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	int d_min = solmin;
 	int d_sec = solsec;
 
-	dt_temp.set_time(d_hour, d_min, d_sec);
+	
 
 	int i = 1;	// this to get the months of the darian calendar
 	do
@@ -429,7 +429,7 @@ Darian_Date_Time Gregorian_DateTime::convert_to_darian()
 	int d_day = soldays;
 
 	dt_temp.set_date(d_year, d_month, d_day);
-
+	dt_temp.set_time(d_hour, d_min, d_sec);
 	return dt_temp;
 
 };

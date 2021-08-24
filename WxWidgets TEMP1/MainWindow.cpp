@@ -277,10 +277,7 @@ MainWindow::MainWindow(wxWindow* parent,
     
     Sizer->Add(panel_right, 0, wxEXPAND);
 
-    //sizer_top->Add(panel_topright, 4, wxEXPAND | wxRIGHT, 5);
-
-    //sizer_top->Add(panel_rightbottom, 2, wxEXPAND | wxTOP | wxRIGHT, 5);
-    //Sizer->Add(sizer_top, 1, wxEXPAND | wxLEFT, 5);
+    
 
 
 
@@ -1222,3 +1219,5 @@ void MainWindow::onClose(wxCloseEvent& event)
 MainWindow::~MainWindow()
 {
 }
+
+//Tempus

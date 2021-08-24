@@ -26,7 +26,7 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
 
     wxStaticText* msglabel = new wxStaticText(this, wxID_ANY, _(
         "Enter the value of the Year, Month and the day in the\n boxes below:"));
-    //msglabel->SetMinSize(wxSize(50, msglabel->GetMinSize().y));
+    
     msgsizer->Add(msglabel);
 
     mainSizer->Add(msgsizer, 0, wxEXPAND | wxALL, 5);
@@ -94,7 +94,7 @@ setDateDialog::setDateDialog(wxWindow* parent, wxWindowID id,
 
     wxStaticText* errlabel = new wxStaticText(this, wxID_ANY, _(
         " - If the entered day is invalid, it will automatically be\n set to the last day or the first day of the month"));
-    //msglabel->SetMinSize(wxSize(50, msglabel->GetMinSize().y));
+    
     errsizer->Add(errlabel);
 
     mainSizer->Add(errsizer, 0, wxEXPAND | wxALL, 5);
@@ -137,3 +137,5 @@ setDateDialog::~setDateDialog()
 {
 
 };
+
+//Tempus

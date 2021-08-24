@@ -25,7 +25,7 @@ setTimeDialog::setTimeDialog(wxWindow* parent, wxWindowID id,
 
     wxStaticText* msglabel = new wxStaticText(this, wxID_ANY, _(
         "Enter the value of the Hour, Minute and seconds in the\n boxes below:"));
-    //msglabel->SetMinSize(wxSize(50, msglabel->GetMinSize().y));
+
     msgsizer->Add(msglabel);
 
     mainSizer->Add(msgsizer, 0, wxEXPAND | wxALL, 5);
@@ -92,7 +92,7 @@ setTimeDialog::setTimeDialog(wxWindow* parent, wxWindowID id,
 
     wxStaticText* errlabel = new wxStaticText(this, wxID_ANY, _(
         " - If the entered time is invalid, it will automatically be\n set to the default max or the min value of the time."));
-    //msglabel->SetMinSize(wxSize(50, msglabel->GetMinSize().y));
+
     errsizer->Add(errlabel);
 
     mainSizer->Add(errsizer, 0, wxEXPAND | wxALL, 5);
@@ -135,3 +135,5 @@ setTimeDialog::~setTimeDialog()
 {
 
 };
+
+//Tempus

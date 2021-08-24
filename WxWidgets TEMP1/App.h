@@ -17,3 +17,5 @@ public:
 };
 
 DECLARE_APP(App); //wxGetApp();
+
+//Tempus

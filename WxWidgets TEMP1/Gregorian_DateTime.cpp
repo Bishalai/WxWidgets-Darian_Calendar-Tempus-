@@ -460,25 +460,7 @@ void Gregorian_DateTime::increase()
 	g_hour = (g_hour % 24);
 
 	set_day(day_temp);
-	/*if (g_month <= 12)
-	{
-		g_month += (g_day / g_months_size[g_month]);
-	}
-	else
-	{
-		g_month += (g_day / g_months_size[1]);
-	}
-	g_year += (g_month / 12);
-	if (g_month!=12)
-	{
-		g_month = (g_month % 12);
-	}
-	else
-	{
-		g_month = 12;
-	}
-	g_day = (g_day % g_months_size[g_month]);
-	*/
+	
 
 };
 
@@ -496,3 +478,4 @@ Gregorian_DateTime::~Gregorian_DateTime()
 };
 
 
+//Tempus

@@ -1,6 +1,4 @@
-
 #pragma once
-//#include "C:\wxWidgets-3.1.5\include\wx\univ\dialog.h"
 #include<wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -56,3 +54,4 @@ public:
     DECLARE_EVENT_TABLE()
 };
 
+//Tempus

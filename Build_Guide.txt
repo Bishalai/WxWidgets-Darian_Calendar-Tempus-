@@ -1,0 +1,43 @@
+WxWidgets Darian Calendar(Tempus) Build Guide
+//----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
+
+Build Instructions::
+
+This project is made in Microsoft Visual Studio Community 2019 Version 16.10.4
+
+using wxWidgets-3.1.5
+
+For setup, install Visual Studio, download the wxWidgets folder from the official site and build it.
+
+Then, make an empty c++ project where we setup wxwidgets in the project properties.(Recommended to save this project as a template for future wxwidgets projects)
+
+Use the files in this project and build the project in both Debug and Release, copy and paste the relevant .dll files into your project debug and release folder.
+
+Then run the project.
+
+!!!!!!Important notes!!!!!!!!
+-----There are '.cpp', '.h' and '.xpm' files for the codes and the graphics icon
+-----'.sln' is the extension used by visual studio project
+-----You will need to build the project in both 'debug' and 'release' and copy the relevant '.dll' 
+	files into your project folder (all this is shown in the recommended video below
+	,running the program should be simple when following the below video guide) 
+
+
+//--the recommended video::
+I recommend to use this video to setup wxwidgets in Visual Studio and run this project.
+Video Link: https://www.youtube.com/watch?v=EI2taYkErRg&t=14s&ab_channel=YansonTech
+
+Visual Studio: https://visualstudio.microsoft.com/downloads/
+
+WxWidgets:https://www.wxwidgets.org/downloads/
+
+GithubLink: https://github.com/Bishalai/WxWidgets-Darian_Calendar-Tempus-
+
+
+Thank you!
+//--------------------------------------------------------------------------------------------//
+-by Tempus
+-Aadarsh Khatri 076bct002
+-Bishal Khand Thakuri 076bct018
+-Kaushal Gautam 076bct030

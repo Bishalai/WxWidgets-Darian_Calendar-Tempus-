@@ -178,18 +178,6 @@ WxWidgets-Darian_Calendar-Tempus-/
     └── WxWidgets TEMP1.vcxproj      Visual Studio project file
 ```
 
----
-
-## Authors
-
-**Tempus**
-
-- Bishal Khand Thakuri — `076bct018`
-- Kaushal Gautam — `076bct030`
-- Aadarsh Khatri — `076bct002`
-
----
-
 ## Links
 
 - Repository: https://github.com/Bishalai/WxWidgets-Darian_Calendar-Tempus-
